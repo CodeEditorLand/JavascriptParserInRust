@@ -50,17 +50,17 @@
 		]
 	},
 	"dependencies": {
-		"@docusaurus/core": "3.0.0",
-		"@docusaurus/preset-classic": "3.0.0",
-		"@vegaprotocol/docusaurus-theme-github-codeblock": "^0.1.8"
+		"@docusaurus/core": "3.2.1",
+		"@docusaurus/preset-classic": "3.2.1",
+		"@vegaprotocol/docusaurus-theme-github-codeblock": "0.1.8"
 	},
 	"devDependencies": {
-		"@docusaurus/module-type-aliases": "3.0.0",
-		"@docusaurus/tsconfig": "3.0.0",
-		"@docusaurus/types": "3.0.0",
+		"@docusaurus/module-type-aliases": "3.2.1",
+		"@docusaurus/tsconfig": "3.2.1",
+		"@docusaurus/types": "3.2.1",
 		"@playform/build": "0.0.7",
 		"@playform/document": "0.0.6",
-		"lint-staged": "15.0.2"
+		"lint-staged": "15.2.2"
 	},
 	"publishConfig": {
 		"access": "public"
