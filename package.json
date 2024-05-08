@@ -58,7 +58,7 @@
 		"@docusaurus/module-type-aliases": "3.3.2",
 		"@docusaurus/tsconfig": "3.3.2",
 		"@docusaurus/types": "3.3.2",
-		"@playform/build": "0.0.7",
+		"@playform/build": "0.0.8",
 		"@playform/document": "0.0.6",
 		"lint-staged": "15.2.2"
 	},
