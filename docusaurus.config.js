@@ -5,7 +5,7 @@ const { themes } = require("prism-react-renderer");
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
 
-
+/** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Write a JavaScript Parser in Rust",
   url: "https://oxc-project.github.io",
@@ -22,7 +22,7 @@ const config = {
   presets: [
     [
       "classic",
-      
+      /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
@@ -45,7 +45,7 @@ const config = {
   ],
   themes: ["@vegaprotocol/docusaurus-theme-github-codeblock"],
   themeConfig:
-    
+    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       metadata: [
         { name: "keywords", content: "rust, javascript, compiler, tutorial" },
