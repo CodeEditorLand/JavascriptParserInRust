@@ -36,6 +36,6 @@
 		"@docusaurus/module-type-aliases": "3.3.2",
 		"@docusaurus/tsconfig": "3.3.2",
 		"@docusaurus/types": "3.3.2",
-		"lint-staged": "15.2.2"
+		"lint-staged": "15.2.4"
 	}
 }
