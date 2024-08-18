@@ -12,15 +12,15 @@
 		]
 	},
 	"dependencies": {
-		"@docusaurus/core": "3.4.0",
-		"@docusaurus/preset-classic": "3.4.0",
+		"@docusaurus/core": "3.5.2",
+		"@docusaurus/preset-classic": "3.5.2",
 		"@vegaprotocol/docusaurus-theme-github-codeblock": "0.1.8"
 	},
 	"devDependencies": {
-		"@docusaurus/module-type-aliases": "3.4.0",
-		"@docusaurus/tsconfig": "3.4.0",
-		"@docusaurus/types": "3.4.0",
-		"lint-staged": "15.2.7"
+		"@docusaurus/module-type-aliases": "3.5.2",
+		"@docusaurus/tsconfig": "3.5.2",
+		"@docusaurus/types": "3.5.2",
+		"lint-staged": "15.2.9"
 	},
 	"lint-staged": {
 		"*.{js,css,md}": "prettier --write"
