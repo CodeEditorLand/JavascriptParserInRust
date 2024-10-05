@@ -3,7 +3,9 @@ id: parser
 title: 解析器 (Parser)
 ---
 
-我们将要构建的解析器称为[递归下降解析器](https://en.wikipedia.org/wiki/Recursive_descent_parser)，它是一个手动过程，顺着语法逐步构建AST。
+我们将要构建的解析器称
+为[递归下降解析器](https://en.wikipedia.org/wiki/Recursive_descent_parser)，它是
+一个手动过程，顺着语法逐步构建AST。
 
 解析器起初很简单，它持有源代码、词法分析器和从词法分析器中获取的当前 token。
 
@@ -44,8 +46,8 @@ impl<'a> Parser<'a> {
 
 ## 辅助函数
 
-`cur_token: Token`保存了从词法分析器返回的当前 token 。
-为了使解析器代码更清晰，我们会添加一些辅助函数来在 token 间移动和检查 token。
+`cur_token: Token`保存了从词法分析器返回的当前 token 。为了使解析器代码更清晰，
+我们会添加一些辅助函数来在 token 间移动和检查 token。
 
 ```rust
 impl<'a> Parser<'a> {
@@ -103,7 +105,8 @@ impl<'a> Parser<'a> {
 
 ## 解析函数
 
-`DebuggerStatement`这个语句，解析起来最简单。让我们尝试解析它并返回一个有效的 `Program`：
+`DebuggerStatement`这个语句，解析起来最简单。让我们尝试解析它并返回一个有效的
+`Program`：
 
 ```rust
 impl<'a> Parser<'a> {
@@ -138,16 +141,21 @@ https://github.com/swc-project/swc/blob/554b459e26b24202f66c3c58a110b3f26bbd13cd
 
 ## 解析表达式
 
-表达式的语法嵌套深且递归，这可能会导致长表达式时出现堆栈溢出（例如[这个 TypeScript 测试](https://github.com/microsoft/TypeScript/blob/main/tests/cases/compiler/binderBinaryExpressionStressJs.ts)）。
+表达式的语法嵌套深且递归，这可能会导致长表达式时出现堆栈溢出（例
+如[这个 TypeScript 测试](https://github.com/microsoft/TypeScript/blob/main/tests/cases/compiler/binderBinaryExpressionStressJs.ts)）。
 
-为了避免递归，我们可以使用"Pratt Parsing"。可以在这里找到更深入的教程[Pratt Parsing](https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html)，此文作者同时也是Rust-Analyzer的作者。
-Rome中的Rust版本在[Rome](https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/syntax/expr.rs#L442)。
+为了避免递归，我们可以使用"Pratt Parsing"。可以在这里找到更深入的教
+程[Pratt Parsing](https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html)，
+此文作者同时也是Rust-Analyzer的作者。Rome中的Rust版本
+在[Rome](https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/syntax/expr.rs#L442)。
 
 ## 列表
 
 有许多地方需要解析以标点分隔的列表，例如`[a, b, c]`和`{a, b, c}`。
 
-解析列表的代码大同小异，我们可以使用[模板方法模式](https://en.wikipedia.org/wiki/Template_method_pattern)通过使用 trait 来避免重复。
+解析列表的代码大同小异，我们可以使
+用[模板方法模式](https://en.wikipedia.org/wiki/Template_method_pattern)通过使用
+trait 来避免重复。
 
 ```rust reference
 https://github.com/rome/tools/blob/85ddb4b2c622cac9638d5230dcefb6cf571677f8/crates/rome_js_parser/src/parser/parse_lists.rs#L131-L157
@@ -163,13 +171,16 @@ https://github.com/rome/tools/blob/85ddb4b2c622cac9638d5230dcefb6cf571677f8/crat
 
 ## 覆盖语法
 
-我们在[覆盖语法](/blog/grammar#cover-grammar)中详细介绍过，有时我们需要将`Expression`转换为`BindingIdentifier`。若使用JavaScript这样的动态语言，则可以简单地重写节点类型：
+我们在[覆盖语法](/blog/grammar#cover-grammar)中详细介绍过，有时我们需要
+将`Expression`转换为`BindingIdentifier`。若使用JavaScript这样的动态语言，则可以
+简单地重写节点类型：
 
 ```javascript reference
 https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/lval.js#L11-L26
 ```
 
-但在Rust中，我们需要进行 struct 到 struct 的转换。一个巧妙而简洁的方法是使用 trait。
+但在Rust中，我们需要进行 struct 到 struct 的转换。一个巧妙而简洁的方法是使用
+trait。
 
 ```rust
 pub trait CoverGrammar<'a, T>: Sized {
@@ -206,4 +217,5 @@ impl<'a> CoverGrammar<'a, ArrayExpression<'a>> for BindingPattern<'a> {
 }
 ```
 
-然后，在任何需要将`Expression`转换为`BindingPattern`的地方，调用`BindingPattern::cover(expression)`。
+然后，在任何需要将`Expression`转换为`BindingPattern`的地方，调
+用`BindingPattern::cover(expression)`。

@@ -3,26 +3,33 @@ id: errors
 title: エラー処理
 ---
 
-[Dragon Book](https://www.amazon.com/Compilers-Principles-Techniques-Tools-2nd/dp/0321486811) から引用します。
+[Dragon Book](https://www.amazon.com/Compilers-Principles-Techniques-Tools-2nd/dp/0321486811)
+から引用します。
 
-> Most programming language specifications do not describe how a compiler should respond to errors; error handling is left to the compiler designer. Planning the error handling right from the start can both simplify the structure of a compiler and improve its handling of errors.
+> Most programming language specifications do not describe how a compiler should
+> respond to errors; error handling is left to the compiler designer. Planning
+> the error handling right from the start can both simplify the structure of a
+> compiler and improve its handling of errors.
 
-完全に回復可能なパーサーは、何を投げても AST を構築することができます。
-リンターやフォーマッタなどのツールでは、部分的に回復可能なパーサーが望まれるため、プログラムの一部に対して操作を行うことができます。
+完全に回復可能なパーサーは、何を投げても AST を構築することができます。リンター
+やフォーマッタなどのツールでは、部分的に回復可能なパーサーが望まれるため、プログ
+ラムの一部に対して操作を行うことができます。
 
-パニックするパーサーは、文法の不一致がある場合に中断し、部分的に回復可能なパーサーは決定的な文法から回復します。
+パニックするパーサーは、文法の不一致がある場合に中断し、部分的に回復可能なパー
+サーは決定的な文法から回復します。
 
-例えば、文法的に正しくない while 文 `while true {}` が与えられた場合、丸括弧が欠落していることがわかります。
-そして、唯一の句読点は丸括弧であるため、有効なASTを返し、欠落している括弧を示すことができます。
+例えば、文法的に正しくない while 文 `while true {}` が与えられた場合、丸括弧が欠
+落していることがわかります。そして、唯一の句読点は丸括弧であるため、有効なASTを
+返し、欠落している括弧を示すことができます。
 
-ほとんどの JavaScript パーサーは部分的に回復可能ですので、同じように部分的に回復可能なパーサーを構築します。
+ほとんどの JavaScript パーサーは部分的に回復可能ですので、同じように部分的に回復
+可能なパーサーを構築します。
 
-:::info
-[Rome](https://github.com/rome/tools) パーサーは完全に回復可能なパーサーです。
-:::
+:::info [Rome](https://github.com/rome/tools) パーサーは完全に回復可能なパーサー
+です。:::
 
-Rustにはエラーを返して伝播させるための `Result` 型があります。
-`?` 構文と組み合わせて、パース関数はシンプルでクリーンなままになります。
+Rustにはエラーを返して伝播させるための `Result` 型があります。 `?` 構文と組み合
+わせて、パース関数はシンプルでクリーンなままになります。
 
 エラーを後で置き換えるために、通常は Result 型をラップします。
 
@@ -72,7 +79,8 @@ pub fn parse_paren_expression(&mut self, ctx: Context) -> Result<Expression> {
 
 :::note
 
-完全性のために、字句解析時に予期しない `char` が見つかった場合にも、字句解析関数 `read_next_token` は `Result` を返すべきです。
+完全性のために、字句解析時に予期しない `char` が見つかった場合にも、字句解析関数
+`read_next_token` は `Result` を返すべきです。
 
 :::
 
@@ -91,9 +99,14 @@ pub enum SyntaxError {
 }
 ```
 
-これを `SyntaxError` と呼びます。なぜなら、ECMAScript 仕様の文法セクションで定義されているすべての「早期エラー」は構文エラーだからです。
+これを `SyntaxError` と呼びます。なぜなら、ECMAScript 仕様の文法セクションで定義
+されているすべての「早期エラー」は構文エラーだからです。
 
-これを正しい `Error` にするためには、[`Error` トレイト](https://doc.rust-lang.org/std/error/trait.Error.html)を実装する必要があります。よりクリーンなコードのために、[`thiserror`](https://docs.rs/thiserror/latest/thiserror) クレートのマクロを使用できます。
+これを正しい `Error` にするために
+は、[`Error` トレイト](https://doc.rust-lang.org/std/error/trait.Error.html)を実
+装する必要があります。よりクリーンなコードのため
+に、[`thiserror`](https://docs.rs/thiserror/latest/thiserror) クレートのマクロを
+使用できます。
 
 ```rust
 #[derive(Debug, Error)]
@@ -109,7 +122,8 @@ pub enum SyntaxError {
 }
 ```
 
-その後、トークンが一致しない場合にエラーをスローするための `expect` ヘルパー関数を追加できます。
+その後、トークンが一致しない場合にエラーをスローするための `expect` ヘルパー関数
+を追加できます。
 
 ```rust
 /// `Kind`を期待するかエラーを返す
@@ -122,7 +136,8 @@ pub fn expect(&mut self, kind: Kind) -> Result<()> {
 }
 ```
 
-`parse_debugger_statement` は、適切なエラー管理のために `expect` 関数を使用できるようになります。
+`parse_debugger_statement` は、適切なエラー管理のために `expect` 関数を使用でき
+るようになります。
 
 ```rust
 fn parse_debugger_statement(&mut self) -> Result<Statement> {
@@ -134,13 +149,13 @@ fn parse_debugger_statement(&mut self) -> Result<Statement> {
 }
 ```
 
-`expect` の後に `?` があることに注意してください。
-これは、`expect` 関数が `Err` を返した場合に関数が早期にリターンするための構文糖です。
+`expect` の後に `?` があることに注意してください。これは、`expect` 関数が `Err`
+を返した場合に関数が早期にリターンするための構文糖です。
 
 ### Fancy Error Report
 
-[`miette`](https://docs.rs/miette/latest/miette) は最も素敵なエラーレポートクレートの 1 つであり、
-視覚的に洗練された出力を提供します。
+[`miette`](https://docs.rs/miette/latest/miette) は最も素敵なエラーレポートク
+レートの 1 つであり、視覚的に洗練された出力を提供します。
 
 ![miette](https://raw.githubusercontent.com/zkat/miette/main/images/serde_json.png)
 
@@ -151,7 +166,8 @@ fn parse_debugger_statement(&mut self) -> Result<Statement> {
 miette = { version = "5", features = ["fancy"] }
 ```
 
-`Error` を `miette` でラップし、パーサーで定義された `Result` 型を変更せずにできます。
+`Error` を `miette` でラップし、パーサーで定義された `Result` 型を変更せずにでき
+ます。
 
 ```rust
 pub fn main() -> Result<()> {

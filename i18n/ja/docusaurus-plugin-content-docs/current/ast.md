@@ -8,56 +8,62 @@ title: 抽象構文木 (AST)
 
 すべての JavaScript ツールはASTレベルで動作します。例えば：
 
-- リンター（例：eslint）は、ASTをエラーのためにチェックします。
-- フォーマッター（例：prettier）は、AST を JavaScript テキストに戻して表示します。
-- ミニファイア（例：terser）は、AST を変換します。
-- バンドラーは、異なるファイルの AST 間のすべてのインポートとエクスポートステートメントを接続します。
+-   リンター（例：eslint）は、ASTをエラーのためにチェックします。
+-   フォーマッター（例：prettier）は、AST を JavaScript テキストに戻して表示しま
+    す。
+-   ミニファイア（例：terser）は、AST を変換します。
+-   バンドラーは、異なるファイルの AST 間のすべてのインポートとエクスポートス
+    テートメントを接続します。
 
 この章では、Rust の構造体と列挙型を使用して JavaScript の AST を構築しましょう。
 
 ## ASTに慣れる
 
-AST に慣れるために、[ASTExplorer](https://astexplorer.net/) を訪れてどのようなものか見てみましょう。
-上部パネルで JavaScript を選択し、次に `acorn` を入力して、ツリービューと JSON ビューが表示されます。
+AST に慣れるために、[ASTExplorer](https://astexplorer.net/) を訪れてどのようなも
+のか見てみましょう。上部パネルで JavaScript を選択し、次に `acorn` を入力して、
+ツリービューと JSON ビューが表示されます。
 
 ```json
 {
-  "type": "Program",
-  "start": 0,
-  "end": 5,
-  "body": [
-    {
-      "type": "VariableDeclaration",
-      "start": 0,
-      "end": 5,
-      "declarations": [
-        {
-          "type": "VariableDeclarator",
-          "start": 4,
-          "end": 5,
-          "id": {
-            "type": "Identifier",
-            "start": 4,
-            "end": 5,
-            "name": "a"
-          },
-          "init": null
-        }
-      ],
-      "kind": "var"
-    }
-  ],
-  "sourceType": "script"
+	"type": "Program",
+	"start": 0,
+	"end": 5,
+	"body": [
+		{
+			"type": "VariableDeclaration",
+			"start": 0,
+			"end": 5,
+			"declarations": [
+				{
+					"type": "VariableDeclarator",
+					"start": 4,
+					"end": 5,
+					"id": {
+						"type": "Identifier",
+						"start": 4,
+						"end": 5,
+						"name": "a"
+					},
+					"init": null
+				}
+			],
+			"kind": "var"
+		}
+	],
+	"sourceType": "script"
 }
 ```
 
-これはツリーなので、すべてのオブジェクトはタイプ名（例：`Program`、`VariableDeclaration`、`VariableDeclarator`、`Identifier`）を持っています。
-`start` と `end` はソースからのオフセットです。
+これはツリーなので、すべてのオブジェクトはタイプ名
+（例：`Program`、`VariableDeclaration`、`VariableDeclarator`、`Identifier`）を
+持っています。 `start` と `end` はソースからのオフセットです。
 
 ## estree
 
-[estree](https://github.com/estree/estree) は、JavaScript のためのコミュニティ標準の文法仕様です。
-これにより、さまざまなツールが互換性を持つことができるように、[すべてのASTノード](https://github.com/estree/estree/blob/master/es5.md) が定義されています。
+[estree](https://github.com/estree/estree) は、JavaScript のためのコミュニティ標
+準の文法仕様です。これにより、さまざまなツールが互換性を持つことができるよう
+に、[すべてのASTノード](https://github.com/estree/estree/blob/master/es5.md) が
+定義されています。
 
 任意のASTノードの基本的な構築要素は、`Node` 型です。
 
@@ -110,9 +116,11 @@ pub enum Expression {
 }
 ```
 
-Rustには継承がないため、各構造体に `Node` が追加されています（これは「継承に代わるコンポジション」と呼ばれます）。
+Rustには継承がないため、各構造体に `Node` が追加されています（これは「継承に代わ
+るコンポジション」と呼ばれます）。
 
-`Statement` と `Expression` は列挙型です。なぜなら、他の多くのノードタイプと拡張されるからです。例えば：
+`Statement` と `Expression` は列挙型です。なぜなら、他の多くのノードタイプと拡張
+されるからです。例えば：
 
 ```rust
 pub enum Expression {
@@ -133,23 +141,29 @@ pub struct YieldExpression {
 
 `Box` が必要なのは、Rustでは自己参照する構造体は許可されていないためです。
 
-:::info
-JavaScriptの文法には多くの面倒な点があります。興味深いので、[文法チュートリアル](/blog/grammar) を読んでみてください。
-:::
+:::info JavaScriptの文法には多くの面倒な点があります。興味深いの
+で、[文法チュートリアル](/blog/grammar) を読んでみてください。:::
 
 ## Rustの最適化
 
 ### メモリ割り当て
 
-[概要](./overview.md) の章で、ヒープに割り当てられた `Vec` や `Box` などの構造体に注意が必要であることを簡単に述べました。なぜなら、ヒープの割り当ては安価ではないからです。
+[概要](./overview.md) の章で、ヒープに割り当てられた `Vec` や `Box` などの構造体
+に注意が必要であることを簡単に述べました。なぜなら、ヒープの割り当ては安価ではな
+いからです。
 
-[swc](https://github.com/swc-project/swc/blob/main/crates/swc_ecma_ast/src/expr.rs) の実装を見てみると、ASTには多くの `Box` や `Vec` が含まれていることがわかります。また、`Statement` と `Expression` の列挙型には多数の列挙子が含まれていることにも注意してください。
+[swc](https://github.com/swc-project/swc/blob/main/crates/swc_ecma_ast/src/expr.rs)
+の実装を見てみると、ASTには多くの `Box` や `Vec` が含まれていることがわかりま
+す。また、`Statement` と `Expression` の列挙型には多数の列挙子が含まれていること
+にも注意してください。
 
 ### 列挙型のサイズ
 
 最初の最適化は、列挙型のサイズを減らすことです。
 
-Rustの列挙型のバイトサイズは、すべての列挙子の合計です。例えば、以下の列挙型は56バイト（タグに1バイト、ペイロードに48バイト、アライメントに8バイト）を使用します。
+Rustの列挙型のバイトサイズは、すべての列挙子の合計です。例えば、以下の列挙型は56
+バイト（タグに1バイト、ペイロードに48バイト、アライメントに8バイト）を使用しま
+す。
 
 ```rust
 enum Name {
@@ -159,15 +173,18 @@ enum Name {
 }
 ```
 
-:::note
-この例は、[このブログ記事](https://adeschamps.github.io/enum-size) から取られています。
-:::
+:::noteこの例は、[このブログ記事](https://adeschamps.github.io/enum-size) から取
+られています。:::
 
-`Expression` と `Statement` の列挙型は、現在の設定では200バイト以上を占めることがあります。
+`Expression` と `Statement` の列挙型は、現在の設定では200バイト以上を占めること
+があります。
 
-これらの200バイトは、`matches!(expr, Expression::AwaitExpression(_))` のチェックを行うたびに渡されるか、アクセスされる必要がありますが、パフォーマンスの観点からはキャッシュに優しくありません。
+これらの200バイトは、`matches!(expr, Expression::AwaitExpression(_))` のチェック
+を行うたびに渡されるか、アクセスされる必要がありますが、パフォーマンスの観点から
+はキャッシュに優しくありません。
 
-より良いアプローチは、列挙型の列挙子をボックス化し、16バイトだけを持ち運ぶことです。
+より良いアプローチは、列挙型の列挙子をボックス化し、16バイトだけを持ち運ぶことで
+す。
 
 ```rust
 pub enum Expression {
@@ -186,7 +203,8 @@ pub struct YieldExpression {
 }
 ```
 
-64 ビットシステムでは、列挙型が実際に16バイトであることを確認するために、`std::mem::size_of` を使用することができます。
+64 ビットシステムでは、列挙型が実際に16バイトであることを確認するため
+に、`std::mem::size_of` を使用することができます。
 
 ```rust
 #[test]
@@ -197,7 +215,8 @@ fn no_bloat_enum_sizes() {
 }
 ```
 
-「no bloat enum sizes」というテストケースは、小さな列挙型サイズを確保するためにRustコンパイラのソースコードでよく見られます。
+「no bloat enum sizes」というテストケースは、小さな列挙型サイズを確保するために
+Rustコンパイラのソースコードでよく見られます。
 
 ```rust reference
 https://github.com/rust-lang/rust/blob/9c20b2a8cc7588decb6de25ac6a7912dcef24d65/compiler/rustc_ast/src/ast.rs#L3033-L3042
@@ -226,21 +245,31 @@ print-type-size         field `.0`: 8 bytes
 
 #### メモリアリーナ
 
-ASTに対してグローバルメモリアロケータを使用するのは実際には非効率です。すべての `Box` と `Vec` は要求に応じて個別に割り当てられ、個別に解放されます。私たちがしたいことは、メモリを事前に割り当てて一括で解放することです。
+ASTに対してグローバルメモリアロケータを使用するのは実際には非効率です。すべての
+`Box` と `Vec` は要求に応じて個別に割り当てられ、個別に解放されます。私たちがし
+たいことは、メモリを事前に割り当てて一括で解放することです。
 
 :::info
-[このブログ記事](https://manishearth.github.io/blog/2021/03/15/arenas-in-rust/)では、メモリアリーナについて詳しく説明しています。
-:::
+[このブログ記事](https://manishearth.github.io/blog/2021/03/15/arenas-in-rust/)で
+は、メモリアリーナについて詳しく説明しています。:::
 
-[`bumpalo`](https://docs.rs/bumpalo/latest/bumpalo/) は、私たちのユースケースに非常に適しているとされています。ドキュメントによれば：
+[`bumpalo`](https://docs.rs/bumpalo/latest/bumpalo/) は、私たちのユースケースに
+非常に適しているとされています。ドキュメントによれば：
 
-> バンプアロケーションは、高速ですが制限されたアロケーション手法です。メモリのチャンクを持ち、そのメモリ内のポインタを維持します。オブジェクトを割り当てるたびに、チャンクに十分な容量が残っているかを素早くチェックし、オブジェクトのサイズによってポインタを更新します。それだけです！
+> バンプアロケーションは、高速ですが制限されたアロケーション手法です。メモリの
+> チャンクを持ち、そのメモリ内のポインタを維持します。オブジェクトを割り当てるた
+> びに、チャンクに十分な容量が残っているかを素早くチェックし、オブジェクトのサイ
+> ズによってポインタを更新します。それだけです！
 >
-> バンプアロケーションの欠点は、個々のオブジェクトを解放したり、使用されなくなったオブジェクトのメモリ領域を回収したりする一般的な方法がないことです。
+> バンプアロケーションの欠点は、個々のオブジェクトを解放したり、使用されなくなっ
+> たオブジェクトのメモリ領域を回収したりする一般的な方法がないことです。
 >
-> これらのトレードオフにより、バンプアロケーションはフェーズ指向のアロケーションに適しています。つまり、同じプログラムフェーズ中にすべてのオブジェクトが割り当てられ、使用され、グループとして一括で解放できるオブジェクトのグループです。
+> これらのトレードオフにより、バンプアロケーションはフェーズ指向のアロケーション
+> に適しています。つまり、同じプログラムフェーズ中にすべてのオブジェクトが割り当
+> てられ、使用され、グループとして一括で解放できるオブジェクトのグループです。
 
-`bumpalo::collections::Vec` と `bumpalo::boxed::Box` を使用することで、ASTに寿命が追加されます。
+`bumpalo::collections::Vec` と `bumpalo::boxed::Box` を使用することで、ASTに寿命
+が追加されます。
 
 ```rust
 use bumpalo::collections::Vec;
@@ -262,15 +291,16 @@ pub struct YieldExpression<'a> {
 }
 ```
 
-:::caution
-この段階では寿命を扱うことに慣れていない場合は注意してください。メモリアリーナを使用しなくてもプログラムは正常に動作します。
+:::cautionこの段階では寿命を扱うことに慣れていない場合は注意してください。メモリ
+アリーナを使用しなくてもプログラムは正常に動作します。
 
-次の章のコードは、シンプルさのためにメモリアリーナの使用を示していません。
-:::
+次の章のコードは、シンプルさのためにメモリアリーナの使用を示していません。:::
 
 ## JSONシリアライゼーション
 
-[serde](https://serde.rs/) を使用してASTをJSONにシリアライズすることができます。`estree` と互換性を持たせるためにはいくつかのテクニックが必要です。以下にいくつかの例を示します。
+[serde](https://serde.rs/) を使用してASTをJSONにシリアライズすることができま
+す。`estree` と互換性を持たせるためにはいくつかのテクニックが必要です。以下にい
+くつかの例を示します。
 
 ```rust
 use serde::Serialize;
@@ -300,6 +330,10 @@ pub enum Expression<'a> {
 }
 ```
 
-- `serde(tag = "type")` は、構造体名を「type」フィールドにするために使用されます。つまり、`{ "type" : "..." }` となります。
-- `cfg_attr` + `serde(rename)` は、`estree` が異なる構造体名を同じ名前にリネームするために使用されます。なぜなら、`estree` は異なる識別子を区別しないからです。
-- 列挙型の `serde(untagged)` は、列挙型のために余分な JSON オブジェクトを作成しないようにするために使用されます。
+-   `serde(tag = "type")` は、構造体名を「type」フィールドにするために使用されま
+    す。つまり、`{ "type" : "..." }` となります。
+-   `cfg_attr` + `serde(rename)` は、`estree` が異なる構造体名を同じ名前にリネー
+    ムするために使用されます。なぜなら、`estree` は異なる識別子を区別しないから
+    です。
+-   列挙型の `serde(untagged)` は、列挙型のために余分な JSON オブジェクトを作成
+    しないようにするために使用されます。
