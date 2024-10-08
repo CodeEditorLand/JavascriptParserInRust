@@ -3,12 +3,9 @@ id: parser
 title: 構文解析器 (パーサー)
 ---
 
-私たちが構築しようとしているパーサー
-は、[再帰下降構文解析](https://en.wikipedia.org/wiki/Recursive_descent_parser)
-と呼ばれ、文法を下降して AST を構築する手法です。
+私たちが構築しようとしているパーサーは、[再帰下降構文解析](https://en.wikipedia.org/wiki/Recursive_descent_parser) と呼ばれ、文法を下降して AST を構築する手法です。
 
-パーサーはソースコード、レキサー、レキサーから返された現在のトークンを保持しま
-す。
+パーサーはソースコード、レキサー、レキサーから返された現在のトークンを保持します。
 
 ```rust
 pub struct Parser<'a> {
@@ -47,9 +44,8 @@ impl<'a> Parser<'a> {
 
 ## ヘルパー関数
 
-現在のトークン `cur_token: Token` は、レキサーから返された現在のトークンを保持し
-ています。このトークンをナビゲートしたり調査するためのヘルパー関数を追加して、
-パーサーコードをよりクリーンにします。
+現在のトークン `cur_token: Token` は、レキサーから返された現在のトークンを保持しています。
+このトークンをナビゲートしたり調査するためのヘルパー関数を追加して、パーサーコードをよりクリーンにします。
 
 ```rust
 impl<'a> Parser<'a> {
@@ -107,8 +103,7 @@ impl<'a> Parser<'a> {
 
 ## parse 関数
 
-`DebuggerStatement` はパースするのが最も簡単な文なので、パースして有効なプログラ
-ムを返してみましょう。
+`DebuggerStatement` はパースするのが最も簡単な文なので、パースして有効なプログラムを返してみましょう。
 
 ```rust
 impl<'a> Parser<'a> {
@@ -135,8 +130,8 @@ impl<'a> Parser<'a> {
 }
 ```
 
-他のすべてのパース関数は、これらの基本的なヘルパー関数を基にして構築されます。た
-とえば、swcの `while` 文をパースする場合は次のようになります。
+他のすべてのパース関数は、これらの基本的なヘルパー関数を基にして構築されます。
+たとえば、swcの `while` 文をパースする場合は次のようになります。
 
 ```rust reference
 https://github.com/swc-project/swc/blob/554b459e26b24202f66c3c58a110b3f26bbd13cd/crates/swc_ecma_parser/src/parser/stmt.rs#L952-L970
@@ -144,32 +139,23 @@ https://github.com/swc-project/swc/blob/554b459e26b24202f66c3c58a110b3f26bbd13cd
 
 ## 式のパース
 
-式の文法は深くネストされており、再帰的です。これは、長い式（たとえ
-ば、[このTypeScriptのテスト](https://github.com/microsoft/TypeScript/blob/main/tests/cases/compiler/binderBinaryExpressionStressJs.ts)）
-でスタックオーバーフローを引き起こす可能性があります。
+式の文法は深くネストされており、再帰的です。
+これは、長い式（たとえば、[このTypeScriptのテスト](https://github.com/microsoft/TypeScript/blob/main/tests/cases/compiler/binderBinaryExpressionStressJs.ts)）でスタックオーバーフローを引き起こす可能性があります。
 
-再帰を避けるために、Prattパーシングと呼ばれるテクニックを使用することができま
-す。詳細なチュートリアルは、Rust-Analyzer の作者によって書かれた
-[こちら](https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html)
-で見つけることができます。また、Rustのバージョンは
-[Rome](https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/syntax/expr.rs#L442)
-で確認できます。
+再帰を避けるために、Prattパーシングと呼ばれるテクニックを使用することができます。詳細なチュートリアルは、Rust-Analyzer の作者によって書かれた [こちら](https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html) で見つけることができます。
+また、Rustのバージョンは [Rome](https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/syntax/expr.rs#L442) で確認できます。
 
 ## リスト
 
-区切り記号で区切られたリストをパースする必要がある場所がたくさんあります。たとえ
-ば、`[a, b, c]` や `{a, b, c}` です。
+区切り記号で区切られたリストをパースする必要がある場所がたくさんあります。たとえば、`[a, b, c]` や `{a, b, c}` です。
 
-リストのパースのコードはすべて似ているた
-め、[テンプレートメソッドパターン](https://en.wikipedia.org/wiki/Template_method_pattern)
-を使用して重複を避けることができます。
+リストのパースのコードはすべて似ているため、[テンプレートメソッドパターン](https://en.wikipedia.org/wiki/Template_method_pattern) を使用して重複を避けることができます。
 
 ```rust reference
 https://github.com/rome/tools/blob/85ddb4b2c622cac9638d5230dcefb6cf571677f8/crates/rome_js_parser/src/parser/parse_lists.rs#L131-L157
 ```
 
-このパターンは、特に `progress.assert_progressing(p);` のような無限ループを防ぐ
-こともできます。
+このパターンは、特に `progress.assert_progressing(p);` のような無限ループを防ぐこともできます。
 
 その後、異なるリストに対して実装の詳細を提供できます。たとえば：
 
@@ -179,17 +165,13 @@ https://github.com/rome/tools/blob/85ddb4b2c622cac9638d5230dcefb6cf571677f8/crat
 
 ## Cover Grammar
 
-[Cover Grammar](/blog/grammar#cover-grammar) で詳細に説明されているよう
-に、`Expression` を `BindingIdentifier` に変換する必要がある場合がありま
-す。JavaScript のような動的言語では、ノードのタイプを単純に書き換えることができ
-ます。
+[Cover Grammar](/blog/grammar#cover-grammar) で詳細に説明されているように、`Expression` を `BindingIdentifier` に変換する必要がある場合があります。JavaScript のような動的言語では、ノードのタイプを単純に書き換えることができます。
 
 ```javascript reference
 https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/lval.js#L11-L26
 ```
 
-しかし、Rust では、構造体から構造体への変換を行う必要があります。これを行うため
-のきれいでシンプルな方法は、トレイトを使用することです。
+しかし、Rust では、構造体から構造体への変換を行う必要があります。これを行うためのきれいでシンプルな方法は、トレイトを使用することです。
 
 ```rust
 pub trait CoverGrammar<'a, T>: Sized {
@@ -197,8 +179,7 @@ pub trait CoverGrammar<'a, T>: Sized {
 }
 ```
 
-このトレイトは、入力型として `T` を受け入れ、出力型として `Self` を受け入れるた
-め、次のように定義できます。
+このトレイトは、入力型として `T` を受け入れ、出力型として `Self` を受け入れるため、次のように定義できます。
 
 ```rust
 impl<'a> CoverGrammar<'a, Expression<'a>> for BindingPattern<'a> {
@@ -227,5 +208,4 @@ impl<'a> CoverGrammar<'a, ArrayExpression<'a>> for BindingPattern<'a> {
 }
 ```
 
-その後、`Expression` を `BindingPattern` に変換する必要がある場所で
-は、`BindingPattern::cover(expression)` を呼び出します。
+その後、`Expression` を `BindingPattern` に変換する必要がある場所では、`BindingPattern::cover(expression)` を呼び出します。

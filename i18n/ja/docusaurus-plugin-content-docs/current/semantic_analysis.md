@@ -4,13 +4,11 @@ title: 意味解析
 ---
 
 意味解析は、ソースコードが正しいかどうかをチェックするプロセスです。  
-ECMAScript の仕様にあるすべての "Early Error" ルールに対してチェックする必要があ
-ります。
+ECMAScript の仕様にあるすべての "Early Error" ルールに対してチェックする必要があります。
 
 ## コンテキスト
 
-`[Yield]` や `[Await]` などの文法コンテキストでは、文法が禁止している場合にエ
-ラーを発生させる必要があります。例えば：
+`[Yield]` や `[Await]` などの文法コンテキストでは、文法が禁止している場合にエラーを発生させる必要があります。例えば：
 
 ```markup
 BindingIdentifier[Yield, Await] :
@@ -36,8 +34,7 @@ async *
   };
 ```
 
-なぜなら、`AsyncGeneratorDeclaration` には、`AsyncGeneratorBody` の `[+Yield]`
-と `[+Await]` があるからです。
+なぜなら、`AsyncGeneratorDeclaration` には、`AsyncGeneratorBody` の `[+Yield]` と `[+Await]` があるからです。
 
 ```markup
 AsyncGeneratorBody :
@@ -62,10 +59,9 @@ Block : { StatementList }
 * StatementListのLexicallyDeclaredNamesの要素がStatementListのVarDeclaredNamesにも含まれている場合、構文エラーです。
 ```
 
-スコープツリーを追加する必要があります。スコープツリーには、その中で宣言されたす
-べての `var` と `let` が含まれます。また、親を指すツリーでもあり、親のスコープで
-バインディング識別子を検索するためにツリーを上に移動する必要があります。使用でき
-るデータ構造は [`indextree`](https://docs.rs/indextree/latest/indextree/)です。
+スコープツリーを追加する必要があります。スコープツリーには、その中で宣言されたすべての `var` と `let` が含まれます。
+また、親を指すツリーでもあり、親のスコープでバインディング識別子を検索するためにツリーを上に移動する必要があります。
+使用できるデータ構造は [`indextree`](https://docs.rs/indextree/latest/indextree/)です。
 
 ```rust
 use indextree::{Arena, Node, NodeId};
@@ -104,8 +100,7 @@ pub struct Scope {
 }
 ```
 
-スコープツリーは、パフォーマンスのためにパーサー内で構築するか、別の AST パスで
-構築するかのいずれかです。
+スコープツリーは、パフォーマンスのためにパーサー内で構築するか、別の AST パスで構築するかのいずれかです。
 
 一般的には、`ScopeBuilder` が必要です。
 
@@ -145,26 +140,20 @@ impl ScopeBuilder {
 }
 ```
 
-その後、パース関数内で適切に `enter_scope` と `leave_scope` を呼び出します。例え
-ば、acornでは：
+その後、パース関数内で適切に `enter_scope` と `leave_scope` を呼び出します。例えば、acornでは：
 
 ```javascript reference
 https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/statement.js#L425-L437
 ```
 
-:::infoこのアプローチの欠点の1つは、アロー関数の場合、一時的なスコープを作成し、
-それがアロー関数ではなくシーケンス式である場合に後で削除する必要があるかもしれな
-いことです。これについては、[ Cover Grammar ](/blog/grammar#cover-grammar)で詳し
-く説明しています。:::
+:::info
+このアプローチの欠点の1つは、アロー関数の場合、一時的なスコープを作成し、それがアロー関数ではなくシーケンス式である場合に後で削除する必要があるかもしれないことです。これについては、[ Cover Grammar ](/blog/grammar#cover-grammar)で詳しく説明しています。
+:::
 
 ### ビジターパターン
 
-シンプルさのためにスコープツリーを別のパスで構築することを決定した場合、AST の各
-ノードを深さ優先の事前順序で訪れ、スコープツリーを構築する必要があります。
+シンプルさのためにスコープツリーを別のパスで構築することを決定した場合、AST の各ノードを深さ優先の事前順序で訪れ、スコープツリーを構築する必要があります。
 
-[ビジターパターン](https://rust-unofficial.github.io/patterns/patterns/behavioural/visitor.html)
-を使用して、トラバーサルプロセスと各オブジェクトで実行される操作を分離することが
-できます。
+[ビジターパターン](https://rust-unofficial.github.io/patterns/patterns/behavioural/visitor.html) を使用して、トラバーサルプロセスと各オブジェクトで実行される操作を分離することができます。
 
-訪問時には、`enter_scope` と `leave_scope` を適切に呼び出してスコープツリーを構
-築することができます。
+訪問時には、`enter_scope` と `leave_scope` を適切に呼び出してスコープツリーを構築することができます。

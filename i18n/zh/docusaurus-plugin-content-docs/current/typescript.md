@@ -3,10 +3,7 @@ id: typescript
 title: TypeScript
 ---
 
-所以你已经完成了JavaScript，现在想要挑战解析TypeScript了？坏消息是没有规范，但好
-消息是TypeScript解析器
-在[一个单一文件](https://github.com/microsoft/TypeScript/blob/main/src/compiler/parser.ts)中
-🙃。
+所以你已经完成了JavaScript，现在想要挑战解析TypeScript了？坏消息是没有规范，但好消息是TypeScript解析器在[一个单一文件](https://github.com/microsoft/TypeScript/blob/main/src/compiler/parser.ts)中 🙃。
 
 ## JSX vs TSX
 
@@ -16,8 +13,7 @@ title: TypeScript
 let foo = <string> bar;
 ```
 
-如果这是`tsx`，那么这是一个语法错误（未终止的JSX），但如果
-是`VariableDeclaration`和`TSTypeAssertion`，那么这是正确的。
+如果这是`tsx`，那么这是一个语法错误（未终止的JSX），但如果是`VariableDeclaration`和`TSTypeAssertion`，那么这是正确的。
 
 ## 前向查找 (lookahead)
 
@@ -35,18 +31,15 @@ type B = { [a]: string }
            ^_________^ TSPropertySignature
 ```
 
-对于第一个`type A`中的`{`，我们需要向前查看5个 token （`readonly`、`[`、`a`、`:`
-和 `number`）以确保它是`TSIndexSignature`而不是`TSPropertySignature`。
+对于第一个`type A`中的`{`，我们需要向前查看5个 token （`readonly`、`[`、`a`、`:` 和 `number`）以确保它是`TSIndexSignature`而不是`TSPropertySignature`。
 
 为了实现这一点并提高效率，词法分析器需要一个缓冲区来存储多个 token 。
 
 ### 箭头表达式
 
-在[cover grammar](/blog/grammar#cover-grammar)中讨论过，当在 SequenceExpression
-后面找到`=>` token 时，我们需要将`Expression`转换为`BindingPattern`。
+在[cover grammar](/blog/grammar#cover-grammar)中讨论过，当在 SequenceExpression 后面找到`=>` token 时，我们需要将`Expression`转换为`BindingPattern`。
 
-但是对于TypeScript来说，这种方法不适用，因为`()`中的每个项目都可能有TypeScript语
-法，有太多情况需要考虑，例如：
+但是对于TypeScript来说，这种方法不适用，因为`()`中的每个项目都可能有TypeScript语法，有太多情况需要考虑，例如：
 
 ```typescript
 <x>a, b as c, d!;

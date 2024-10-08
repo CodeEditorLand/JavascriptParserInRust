@@ -3,8 +3,8 @@ id: semantics_analysis
 title: 语义分析 (Semantic Analysis)
 ---
 
-语义分析是检查我们的源代码是否正确的过程。我们需要根据ECMAScript规范中的所有"早
-期错误"规则进行检查。
+语义分析是检查我们的源代码是否正确的过程。
+我们需要根据ECMAScript规范中的所有"早期错误"规则进行检查。
 
 ## 上下文
 
@@ -34,8 +34,7 @@ async *
   };
 ```
 
-因为`AsyncGeneratorDeclaration`对于`AsyncGeneratorBody`带
-有`[+Yield]`和`[+Await]`：
+因为`AsyncGeneratorDeclaration`对于`AsyncGeneratorBody`带有`[+Yield]`和`[+Await]`：
 
 ```markup
 AsyncGeneratorBody :
@@ -60,10 +59,9 @@ Block : { StatementList }
 * 如果StatementList的LexicallyDeclaredNames中的任何元素也出现在StatementList的VarDeclaredNames中，则为语法错误。
 ```
 
-我们需要添加一个作用域树 (scope tree)。作用域树包含在其中声明的所
-有`var`和`let`。这棵树的节点有指向父级节点的指针，我们希望以此在树上向上移动并在
-父级作用域之中搜索绑定标识符。我们可以使
-用[`indextree`](https://docs.rs/indextree/latest/indextree/)作为数据结构。
+我们需要添加一个作用域树 (scope tree)。作用域树包含在其中声明的所有`var`和`let`。
+这棵树的节点有指向父级节点的指针，我们希望以此在树上向上移动并在父级作用域之中搜索绑定标识符。
+我们可以使用[`indextree`](https://docs.rs/indextree/latest/indextree/)作为数据结构。
 
 ```rust
 use indextree::{Arena, Node, NodeId};
@@ -148,17 +146,16 @@ impl ScopeBuilder {
 https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/statement.js#L425-L437
 ```
 
-:::info 这种方法的一个缺点是，对于箭头函数，我们可能需要创建一个临时作用域，若是
-在不是箭头函数而是序列表达式 (sequence expression)时则将其 drop。这
-在[cover grammar](/blog/grammar#cover-grammar)中有详细说明。:::
+:::info
+这种方法的一个缺点是，对于箭头函数，我们可能需要创建一个临时作用域，若是在不是箭头函数而是序列表达式 (sequence expression)时则将其 drop。
+这在[cover grammar](/blog/grammar#cover-grammar)中有详细说明。
+:::
 
 ### 访问者模式 (The Visitor Pattern)
 
-如果我们选择在一个单独的遍历中构建作用域树以追求简单，那么需要按照深度优先的前序
-(preorder)来访问AST中的每个节点并构建作用域树。
+如果我们选择在一个单独的遍历中构建作用域树以追求简单，
+那么需要按照深度优先的前序 (preorder)来访问AST中的每个节点并构建作用域树。
 
-我们可以使
-用[访问者模式](https://rust-unofficial.github.io/patterns/patterns/behavioural/visitor.html)将
-遍历过程与对每个对象执行的操作分离开来。
+我们可以使用[访问者模式](https://rust-unofficial.github.io/patterns/patterns/behavioural/visitor.html)将遍历过程与对每个对象执行的操作分离开来。
 
 在访问时，我们可以相应地调用`enter_scope`和`leave_scope`来构建作用域树。
