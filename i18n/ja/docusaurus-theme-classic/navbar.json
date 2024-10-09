@@ -1,18 +1,18 @@
 {
-  "title": {
-    "message": "ホーム",
-    "description": "The title in the navbar"
-  },
-  "item.label.Guide": {
-    "message": "ガイド",
-    "description": "Navbar item with label Guide"
-  },
-  "item.label.Tutorials": {
-    "message": "チュートリアル",
-    "description": "Navbar item with label Tutorials"
-  },
-  "item.label.GitHub": {
-    "message": "GitHub",
-    "description": "Navbar item with label GitHub"
-  }
+	"title": {
+		"message": "ホーム",
+		"description": "The title in the navbar"
+	},
+	"item.label.Guide": {
+		"message": "ガイド",
+		"description": "Navbar item with label Guide"
+	},
+	"item.label.Tutorials": {
+		"message": "チュートリアル",
+		"description": "Navbar item with label Tutorials"
+	},
+	"item.label.GitHub": {
+		"message": "GitHub",
+		"description": "Navbar item with label GitHub"
+	}
 }

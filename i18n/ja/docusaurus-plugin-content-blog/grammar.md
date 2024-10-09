@@ -2,44 +2,52 @@
 title: 文法
 ---
 
-JavaScript の文法は解析が非常に困難なものの一つであり、
-このチュートリアルでは私が学習中に経験した苦労と涙を詳細に説明します。
+JavaScript の文法は解析が非常に困難なものの一つであり、このチュートリアルでは私
+が学習中に経験した苦労と涙を詳細に説明します。
 
 ## LL(1)文法
 
 [Wikipedia](https://en.wikipedia.org/wiki/LL_grammar) によると、
 
-> an LL grammar is a context-free grammar that can be parsed by an LL parser, which parses the input from Left to right
+> an LL grammar is a context-free grammar that can be parsed by an LL parser,
+> which parses the input from Left to right
 
-最初の「L」はソースを左から右にスキャンすることを意味し、
-2番目の「L」は左端導出木の構築を意味します。
+最初の「L」はソースを左から右にスキャンすることを意味し、2番目の「L」は左端導出
+木の構築を意味します。
 
-文脈自由であり、LL(1) の「1」は次のトークンを覗き見るだけで木を構築できることを意味します。
+文脈自由であり、LL(1) の「1」は次のトークンを覗き見るだけで木を構築できることを
+意味します。
 
-LL 文法は、私たちが怠惰な人間であり、パーサを手動で書く必要がないように、プログラムを自動的に生成するプログラムを書きたいという理由で、学術界で特に興味を持たれています。
+LL 文法は、私たちが怠惰な人間であり、パーサを手動で書く必要がないように、プログ
+ラムを自動的に生成するプログラムを書きたいという理由で、学術界で特に興味を持たれ
+ています。
 
-残念なことに、ほとんどの産業用プログラミング言語には素晴らしい LL(1) 文法はありません。
-JavaScript もその例外ではありません。
+残念なことに、ほとんどの産業用プログラミング言語には素晴らしい LL(1) 文法はあり
+ません。JavaScript もその例外ではありません。
 
-:::info
-Mozillaは数年前に [jsparagus](https://github.com/mozilla-spidermonkey/jsparagus) プロジェクトを開始し、
-[Python で LALR パーサジェネレータ](https://github.com/mozilla-spidermonkey/jsparagus/tree/master/jsparagus) を作成しました。
-彼らは過去2年間ほとんど更新しておらず、[js-quirks.md](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md) の最後に強いメッセージを送っています。
+:::info Mozillaは数年前に
+[jsparagus](https://github.com/mozilla-spidermonkey/jsparagus) プロジェクトを開
+始し、
+[Python で LALR パーサジェネレータ](https://github.com/mozilla-spidermonkey/jsparagus/tree/master/jsparagus)
+を作成しました。彼らは過去2年間ほとんど更新しておら
+ず、[js-quirks.md](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md)
+の最後に強いメッセージを送っています。
 
 > What have we learned today?
 >
-> - Do not write a JS parser.
-> - JavaScript has some syntactic horrors in it. But hey, you don't make the world's most widely used programming language by avoiding all mistakes.
+> -   Do not write a JS parser.
+> -   JavaScript has some syntactic horrors in it. But hey, you don't make the
+>     world's most widely used programming language by avoiding all mistakes.
 
 :::
 
 ---
 
-JavaScript を解析する唯一の実用的な方法は、その文法の性質上、手動で再帰下降パーサを書くことです。
-そのため、足を撃つ前に文法の特異性をすべて学びましょう。
+JavaScript を解析する唯一の実用的な方法は、その文法の性質上、手動で再帰下降パー
+サを書くことです。そのため、足を撃つ前に文法の特異性をすべて学びましょう。
 
-以下のリストは簡単なものから理解が難しくなりますので、
-コーヒーを飲んでゆっくりと時間をかけてください。
+以下のリストは簡単なものから理解が難しくなりますので、コーヒーを飲んでゆっくりと
+時間をかけてください。
 
 ## 識別子
 
@@ -51,10 +59,12 @@ BindingIdentifier[Yield, Await] :
 LabelIdentifier[Yield, Await] :
 ```
 
-`estree` および一部の AST では、上記の識別子を区別せず、仕様書ではそれらを平文で説明していません。
+`estree` および一部の AST では、上記の識別子を区別せず、仕様書ではそれらを平文で
+説明していません。
 
-`BindingIdentifier` は宣言であり、`IdentifierReference` はバインディング識別子への参照です。
-例えば、`var foo = bar` の場合、`foo` は文法上の `BindingIdentifier` であり、`bar` は `IdentifierReference` です。
+`BindingIdentifier` は宣言であり、`IdentifierReference` はバインディング識別子へ
+の参照です。例えば、`var foo = bar` の場合、`foo` は文法上の `BindingIdentifier`
+であり、`bar` は `IdentifierReference` です。
 
 ```markup
 VariableDeclaration[In, Yield, Await] :
@@ -71,7 +81,8 @@ PrimaryExpression[Yield, Await] :
     IdentifierReference[?Yield, ?Await]
 ```
 
-ASTでこれらの識別子を異なる方法で宣言すると、特に意味解析のために、下流のツールを大幅に簡素化することができます。
+ASTでこれらの識別子を異なる方法で宣言すると、特に意味解析のために、下流のツール
+を大幅に簡素化することができます。
 
 ```rust
 pub struct BindingIdentifier {
@@ -89,10 +100,14 @@ pub struct IdentifierReference {
 
 ## クラスと Strict モード
 
-ECMAScript のクラスは、Strict モードの後に生まれたため、クラス内のすべての要素はシンプルさのために Strict モードである必要があります。
-`#sec-class-definitions` では、`Node: A class definition is always strict mode code.` と述べられています。
+ECMAScript のクラスは、Strict モードの後に生まれたため、クラス内のすべての要素は
+シンプルさのために Strict モードである必要があります。 `#sec-class-definitions`
+では、`Node: A class definition is always strict mode code.` と述べられていま
+す。
 
-関数スコープと関連付けることで Strict モードを宣言することは簡単ですが、`class` 宣言にはスコープがないため、クラスの解析のために追加の状態を保持する必要があります。
+関数スコープと関連付けることで Strict モードを宣言することは簡単ですが、`class`
+宣言にはスコープがないため、クラスの解析のために追加の状態を保持する必要がありま
+す。
 
 ```rust reference
 https://github.com/swc-project/swc/blob/f9c4eff94a133fa497778328fa0734aa22d5697c/crates/swc_ecma_parser/src/parser/class_and_fn.rs#L85
@@ -102,7 +117,8 @@ https://github.com/swc-project/swc/blob/f9c4eff94a133fa497778328fa0734aa22d5697c
 
 ## レガシーオクタルと Use Strict
 
-`#sec-string-literals-early-errors` では、文字列内のエスケープされたレガシーオクタル `"\01"` は許可されていません。
+`#sec-string-literals-early-errors` では、文字列内のエスケープされたレガシーオク
+タル `"\01"` は許可されていません。
 
 ```markup
 EscapeSequence ::
@@ -112,7 +128,8 @@ EscapeSequence ::
 このプロダクションにマッチするソーステキストが Strict モードコードである場合、構文エラーです。
 ```
 
-これを検出するのに最適な場所は、レキサーの内部です。レキサーはパーサーに Strict モードの状態を尋ね、それに応じてエラーをスローすることができます。
+これを検出するのに最適な場所は、レキサーの内部です。レキサーはパーサーに Strict
+モードの状態を尋ね、それに応じてエラーをスローすることができます。
 
 しかし、これはディレクティブと混在した場合には不可能になります。
 
@@ -120,17 +137,22 @@ EscapeSequence ::
 https://github.com/tc39/test262/blob/747bed2e8aaafe8fdf2c65e8a10dd7ae64f66c47/test/language/literals/string/legacy-octal-escape-sequence-prologue-strict.js#L16-L19
 ```
 
-`use strict` はエスケープされたレガシーオクタルの後に宣言されていますが、構文エラーがスローされる必要があります。
-幸いなことに、実際のコードではディレクティブとレガシーオクタルを組み合わせることはありません...上記の test262 のケースをパスしたい場合を除いては。
+`use strict` はエスケープされたレガシーオクタルの後に宣言されていますが、構文エ
+ラーがスローされる必要があります。幸いなことに、実際のコードではディレクティブと
+レガシーオクタルを組み合わせることはありません...上記の test262 のケースをパスし
+たい場合を除いては。
 
 ---
 
 ## 非単純パラメータと Strict モード
 
-非Strictモードでは、同じ関数パラメータを許可します `function foo(a, a) { }`、そして `use strict` を追加することでこれを禁止することができます：`function foo(a, a) { "use strict" }`。
-その後のes6では、関数パラメータに他の文法が追加されました。例えば `function foo({ a }, b = c) {}`。
+非Strictモードでは、同じ関数パラメータを許可します `function foo(a, a) { }`、そ
+して `use strict` を追加することでこれを禁止することができま
+す：`function foo(a, a) { "use strict" }`。その後のes6では、関数パラメータに他の
+文法が追加されました。例えば `function foo({ a }, b = c) {}`。
 
-では、次のようなコードを書いた場合、"01" は Strict モードのエラーとなるのでしょうか？
+では、次のようなコードを書いた場合、"01" は Strict モードのエラーとなるのでしょ
+うか？
 
 ```javaScript
 function foo(value=(function() { return "\01" }())) {
@@ -139,8 +161,10 @@ function foo(value=(function() { return "\01" }())) {
 }
 ```
 
-具体的には、パーサーの観点からパラメータ内に Strict モードの構文エラーがある場合、どうすべきでしょうか？
-そのため、`#sec-function-definitions-static-semantics-early-errors` では、次のように述べてこれを禁止しています。
+具体的には、パーサーの観点からパラメータ内に Strict モードの構文エラーがある場
+合、どうすべきでしょうか？そのた
+め、`#sec-function-definitions-static-semantics-early-errors` では、次のように述
+べてこれを禁止しています。
 
 ```markup
 FunctionDeclaration :
@@ -149,13 +173,18 @@ FunctionExpression :
 FunctionBodyがFunctionBodyContainsUseStrictでtrueであり、FormalParametersがIsSimpleParameterListでfalseである場合、構文エラーです。
 ```
 
-Chrome は、謎めいたメッセージ「Uncaught SyntaxError: Illegal 'use strict' directive in function with non-simple parameter list」というエラーをスローします。
+Chrome は、謎めいたメッセージ「Uncaught SyntaxError: Illegal 'use strict'
+directive in function with non-simple parameter list」というエラーをスローしま
+す。
 
-詳細な説明は、ESLint の作者による [このブログ記事](https://humanwhocodes.com/blog/2016/10/the-ecmascript-2016-change-you-probably-dont-know/) に記載されています。
+詳細な説明は、ESLint の作者による
+[このブログ記事](https://humanwhocodes.com/blog/2016/10/the-ecmascript-2016-change-you-probably-dont-know/)
+に記載されています。
 
 :::info
 
-興味深い事実ですが、TypeScript で `es5` をターゲットにしている場合、上記のルールは適用されません。次のようにトランスパイルされます。
+興味深い事実ですが、TypeScript で `es5` をターゲットにしている場合、上記のルール
+は適用されません。次のようにトランスパイルされます。
 
 ```javaScript
 function foo(a, b) {
@@ -170,12 +199,14 @@ function foo(a, b) {
 
 ## ParenthesizedExpression
 
-ParenthesizedExpression (パレン式)には意味がないはずですか？
-例えば、`((x))`のASTは、`ParenthesizedExpression` -> `ParenthesizedExpression` -> `IdentifierReference` ではなく、単一の `IdentifierReference` であることができます。
-そして、これは JavaScript の文法の場合です。
+ParenthesizedExpression (パレン式)には意味がないはずですか？例えば、`((x))`のAST
+は、`ParenthesizedExpression` -> `ParenthesizedExpression` ->
+`IdentifierReference` ではなく、単一の `IdentifierReference` であることができま
+す。そして、これは JavaScript の文法の場合です。
 
 しかし...誰が実行時の意味を持つことができると思ったでしょうか。
-[この estree の問題](https://github.com/estree/estree/issues/194)で見つかったように、
+[この estree の問題](https://github.com/estree/estree/issues/194)で見つかったよ
+うに、
 
 ```javascript
 > fn = function () {};
@@ -187,7 +218,8 @@ ParenthesizedExpression (パレン式)には意味がないはずですか？
 < ''
 ```
 
-結局のところ、acorn と babel は互換性のために `preserveParens` オプションを追加しました。
+結局のところ、acorn と babel は互換性のために `preserveParens` オプションを追加
+しました。
 
 ---
 
@@ -203,9 +235,11 @@ Declaration[Yield, Await] :
     ...宣言
 ```
 
-私たちのASTのために定義した `Statement` ノードには明らかに `Declaration` は含まれていませんが、
+私たちのASTのために定義した `Statement` ノードには明らかに `Declaration` は含ま
+れていませんが、
 
-しかし、Annex B `#sec-functiondeclarations-in-ifstatement-statement-clauses` では、非厳密モードの `if` 文の文の位置に宣言を許可しています。
+しかし、Annex B `#sec-functiondeclarations-in-ifstatement-statement-clauses` で
+は、非厳密モードの `if` 文の文の位置に宣言を許可しています。
 
 ```javascript
 if (x) function foo() {}
@@ -216,15 +250,16 @@ else function bar() {}
 
 ## ラベル文は正当です
 
-おそらく私たちは一行もラベル付き文を書いたことがないでしょうが、それは現代の JavaScript では正当であり、厳密モードでは禁止されていません。
+おそらく私たちは一行もラベル付き文を書いたことがないでしょうが、それは現代の
+JavaScript では正当であり、厳密モードでは禁止されていません。
 
 次の構文は正しいですが、オブジェクトリテラルではなく、ラベル付き文を返します。
 
 ```javascript
 <Foo
-  bar={() => {
-    baz: "quaz";
-  }}
+	bar={() => {
+		baz: "quaz";
+	}}
 />
 //   ^^^^^^^^^^^ `LabelledStatement`
 ```
@@ -233,8 +268,10 @@ else function bar() {}
 
 ## `let` はキーワードではありません
 
-`let` はキーワードではないため、文法が明示的にそのような位置に `let` が許可されていないと述べている限り、どこにでも現れることが許されています。
-パーサーは `let` トークンの次のトークンを覗き見て、それをどのように解析するかを決定する必要があります。例えば：
+`let` はキーワードではないため、文法が明示的にそのような位置に `let` が許可され
+ていないと述べている限り、どこにでも現れることが許されています。パーサーは `let`
+トークンの次のトークンを覗き見て、それをどのように解析するかを決定する必要があり
+ます。例えば：
 
 ```javascript
 let a;
@@ -249,16 +286,22 @@ a = let[0];
 
 ## For-in / For-of と [In] コンテキスト
 
-`#prod-ForInOfStatement` の `for-in` および `for-of` の文法を見ると、これらを解析する方法がすぐにわかりにくくなります。
+`#prod-ForInOfStatement` の `for-in` および `for-of` の文法を見ると、これらを解
+析する方法がすぐにわかりにくくなります。
 
-私たちが理解するための2つの主な障害があります：`[lookahead ≠ let]` の部分と `[+In]` の部分です。
+私たちが理解するための2つの主な障害があります：`[lookahead ≠ let]` の部分と
+`[+In]` の部分です。
 
 `for (let` まで解析した場合、次のトークンを確認する必要があります：
 
-- `in` ではないこと（`for (let in` を許可しないため）
-- `{`、`[`、または識別子であること（`for (let {} = foo)`、`for (let [] = foo)`、`for (let bar = foo)` を許可するため）
+-   `in` ではないこと（`for (let in` を許可しないため）
+-   `{`、`[`、または識別子であること
+    （`for (let {} = foo)`、`for (let [] = foo)`、`for (let bar = foo)` を許可す
+    るため）
 
-`of` または `in` キーワードに到達したら、右辺の式は正しい[+In]コンテキストで渡す必要があります。これにより、`#prod-RelationalExpression` の2つの `in` 式が許可されなくなります。
+`of` または `in` キーワードに到達したら、右辺の式は正しい[+In]コンテキストで渡す
+必要があります。これにより、`#prod-RelationalExpression` の2つの `in` 式が許可さ
+れなくなります。
 
 ```
 RelationalExpression[In, Yield, Await] :
@@ -270,21 +313,25 @@ Note 2: [In ]文法パラメータは、関係式内のin演算子とfor文内�
 
 これは仕様全体での [In] コンテキストの唯一の適用です。
 
-また、文法 `[lookahead ∉ { let, async of }]` は `for (async of ...)` を禁止しており、明示的に防止する必要があります。
+また、文法 `[lookahead ∉ { let, async of }]` は `for (async of ...)` を禁止して
+おり、明示的に防止する必要があります。
 
 ---
 
 ## ブロックレベルの関数宣言
 
-Annex B.3.2 `#sec-block-level-function-declarations-web-legacy-compatibility-semantics` では、`FunctionDeclaration` が `Block` 文でどのように動作するかを説明するために1ページが割かれています。
-要点は次のとおりです。
+Annex B.3.2
+`#sec-block-level-function-declarations-web-legacy-compatibility-semantics` で
+は、`FunctionDeclaration` が `Block` 文でどのように動作するかを説明するために1
+ページが割かれています。要点は次のとおりです。
 
 ```javascript reference
 https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/scope.js#L30-L35
 ```
 
-`FunctionDeclaration` の名前は、関数宣言内にある場合には `var` 宣言と同じように扱われる必要があります。
-次のコードスニペットは、`bar` がブロックスコープ内にあるため、再宣言エラーが発生します。
+`FunctionDeclaration` の名前は、関数宣言内にある場合には `var` 宣言と同じように
+扱われる必要があります。次のコードスニペットは、`bar` がブロックスコープ内にある
+ため、再宣言エラーが発生します。
 
 ```javascript
 function foo() {
@@ -295,12 +342,13 @@ function foo() {
 }
 ```
 
-一方、次のコードはエラーになりません。関数 `bar` は関数スコープ内にあるため、var 宣言として扱われます。
+一方、次のコードはエラーになりません。関数 `bar` は関数スコープ内にあるため、var
+宣言として扱われます。
 
 ```javascript
 function foo() {
-  var bar;
-  function bar() {}
+	var bar;
+	function bar() {}
 }
 ```
 
@@ -308,10 +356,12 @@ function foo() {
 
 ## 文法コンテキスト
 
-構文的な文法には、特定の構造を許可または禁止するための 5 つのコンテキストパラメータがあります。
-具体的には、`[In]`、`[Return]`、`[Yield]`、`[Await]`、`[Default]` です。
+構文的な文法には、特定の構造を許可または禁止するための 5 つのコンテキストパラ
+メータがあります。具体的に
+は、`[In]`、`[Return]`、`[Yield]`、`[Await]`、`[Default]` です。
 
-解析中にコンテキストを保持することが最善です。例えば、Romeでは次のようになります。
+解析中にコンテキストを保持することが最善です。例えば、Romeでは次のようになりま
+す。
 
 ```rust reference
 https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/state.rs#L404-L425
@@ -374,7 +424,8 @@ var [ foo ] = bar;
       ^^^ BindingIdentifier
 ```
 
-これは混乱を招くようになります。なぜなら、`Identifier` が `BindingIdentifier` なのか `IdentifierReference` なのかを直接区別することができなくなるからです。
+これは混乱を招くようになります。なぜなら、`Identifier` が `BindingIdentifier` な
+のか `IdentifierReference` なのかを直接区別することができなくなるからです。
 
 ```rust
 enum Pattern {
@@ -384,11 +435,14 @@ enum Pattern {
 }
 ```
 
-これにより、パーサーパイプラインのさらなる不要なコードが発生します。たとえば、意味解析のスコープを設定する際に、この `Identifier` をスコープにバインドするかどうかを判断するために、この `Identifier` の親を調べる必要があります。
+これにより、パーサーパイプラインのさらなる不要なコードが発生します。たとえば、意
+味解析のスコープを設定する際に、この `Identifier` をスコープにバインドするかどう
+かを判断するために、この `Identifier` の親を調べる必要があります。
 
 より良い解決策は、仕様を完全に理解し、何をするかを決定することです。
 
-`AssignmentExpression` と `VariableDeclaration` の文法は次のように定義されています。
+`AssignmentExpression` と `VariableDeclaration` の文法は次のように定義されていま
+す。
 
 ```marup
 13.15 Assignment Operators
@@ -415,9 +469,11 @@ VariableDeclaration[In, Yield, Await] :
     BindingPattern[?Yield, ?Await] Initializer[?In, ?Yield, ?Await]
 ```
 
-仕様では、これらの文法を `AssignmentPattern` と `BindingPattern` として別々に定義して区別しています。
+仕様では、これらの文法を `AssignmentPattern` と `BindingPattern` として別々に定
+義して区別しています。
 
-そのため、このような状況では、`estree` から逸脱して、パーサーのために追加のASTノードを定義することを恐れないでください。
+そのため、このような状況では、`estree` から逸脱して、パーサーのために追加のAST
+ノードを定義することを恐れないでください。
 
 ```rust
 enum BindingPattern {
@@ -433,21 +489,28 @@ enum AssignmentPattern {
 }
 ```
 
-私は1週間もの間、非常に混乱していましたが、ついに悟りに達しました。単一の `Pattern` ノードではなく、`AssignmentPattern` ノードと `BindingPattern` ノードを定義する必要があります。
+私は1週間もの間、非常に混乱していましたが、ついに悟りに達しました。単一の
+`Pattern` ノードではなく、`AssignmentPattern` ノードと `BindingPattern` ノードを
+定義する必要があります。
 
-- `estree` は正しいはずです。何年も使われているので間違っているはずがありませんよね？
-- パターン内の `Identifier` をきれいに区別する方法はありますか？文法はどこにあるのか見つけられません。
-- 1日中仕様を調べても、`AssignmentPattern` の文法はメインセクションの5番目のサブセクションにあり、サブタイトルが「Supplemental Syntax」であることがわかりました。これは本当に場違いです。すべての文法はメインセクションで定義されているのに、この文法だけが「Runtime Semantics」セクションの後に定義されています。
+-   `estree` は正しいはずです。何年も使われているので間違っているはずがありませ
+    んよね？
+-   パターン内の `Identifier` をきれいに区別する方法はありますか？文法はどこにあ
+    るのか見つけられません。
+-   1日中仕様を調べても、`AssignmentPattern` の文法はメインセクションの5番目のサ
+    ブセクションにあり、サブタイトルが「Supplemental Syntax」であることがわかり
+    ました。これは本当に場違いです。すべての文法はメインセクションで定義されてい
+    るのに、この文法だけが「Runtime Semantics」セクションの後に定義されていま
+    す。
 
 ---
 
-:::caution
-以下のケースは非常に理解が難しいです。注意が必要です。
-:::
+:::caution以下のケースは非常に理解が難しいです。注意が必要です。:::
 
 ## 曖昧な文法
 
-まず、パーサーのように考えて問題を解決しましょう - `/` トークンが除算演算子なのか正規表現式の開始なのかを判断します。
+まず、パーサーのように考えて問題を解決しましょう - `/` トークンが除算演算子なの
+か正規表現式の開始なのかを判断します。
 
 ```javascript
 a / b;
@@ -459,15 +522,21 @@ a /= / regex /;
 
 これはほとんど不可能ですね。これらを分解して文法に従ってみましょう。
 
-まず理解する必要があるのは、構文的文法が字句的文法を駆動するということです。`#sec-ecmascript-language-lexical-grammar` で述べられています。
+まず理解する必要があるのは、構文的文法が字句的文法を駆動するということで
+す。`#sec-ecmascript-language-lexical-grammar` で述べられています。
 
-> There are several situations where the identification of lexical input elements is sensitive to the syntactic grammar context that is consuming the input elements.
+> There are several situations where the identification of lexical input
+> elements is sensitive to the syntactic grammar context that is consuming the
+> input elements.
 
-これは、パーサーが次に返すトークンを字句解析器に指示する責任があることを意味します。
-上記の例では、字句解析器が `/` トークンまたは `RegExp` トークンのいずれかを返す必要があります。
-正しい `/` または `RegExp` トークンを取得するために、仕様は次のように述べています。
+これは、パーサーが次に返すトークンを字句解析器に指示する責任があることを意味しま
+す。上記の例では、字句解析器が `/` トークンまたは `RegExp` トークンのいずれかを
+返す必要があります。正しい `/` または `RegExp` トークンを取得するために、仕様は
+次のように述べています。
 
-> The InputElementRegExp goal symbol is used in all syntactic grammar contexts where a RegularExpressionLiteral is permitted ... In all other contexts, InputElementDiv is used as the lexical goal symbol.
+> The InputElementRegExp goal symbol is used in all syntactic grammar contexts
+> where a RegularExpressionLiteral is permitted ... In all other contexts,
+> InputElementDiv is used as the lexical goal symbol.
 
 そして、`InputElementDiv` と `InputElementRegExp` の構文は次のようになります。
 
@@ -489,8 +558,10 @@ InputElementRegExp ::
     RegularExpressionLiteral <-------- `RegExp`トークン
 ```
 
-これは、文法が `RegularExpressionLiteral` に到達するたびに、`/` を `RegExp` トークンとしてトークン化する必要があることを意味します（一致する `/` がない場合はエラーをスローします）。
-それ以外の場合は、`/` をスラッシュトークンとしてトークン化します。
+これは、文法が `RegularExpressionLiteral` に到達するたびに、`/` を `RegExp` トー
+クンとしてトークン化する必要があることを意味します（一致する `/` がない場合はエ
+ラーをスローします）。それ以外の場合は、`/` をスラッシュトークンとしてトークン化
+します。
 
 例を見てみましょう：
 
@@ -501,36 +572,43 @@ a / / regex /
     ^^^^^^^^ - PrimaryExpression: RegularExpressionLiteral
 ```
 
-この文は `Statement` の他の開始と一致しないため、`ExpressionStatement` のルートに進みます。
+この文は `Statement` の他の開始と一致しないため、`ExpressionStatement` のルート
+に進みます。
 
 `ExpressionStatement` --> `Expression` --> `AssignmentExpression` --> ... -->
-`MultiplicativeExpression` --> ... -->
-`MemberExpression` --> `PrimaryExpression` --> `IdentifierReference`。
+`MultiplicativeExpression` --> ... --> `MemberExpression` -->
+`PrimaryExpression` --> `IdentifierReference`。
 
-`IdentifierReference` で止まり、`RegularExpressionLiteral` ではなく、文「それ以外のすべてのコンテキストでは、InputElementDivが字句ゴール記号として使用されます」が適用されます。
-最初のスラッシュは `DivPunctuator` トークンです。
+`IdentifierReference` で止まり、`RegularExpressionLiteral` ではなく、文「それ以
+外のすべてのコンテキストでは、InputElementDivが字句ゴール記号として使用されま
+す」が適用されます。最初のスラッシュは `DivPunctuator` トークンです。
 
-これが `DivPunctuator` トークンであるため、文法 `MultiplicativeExpression: MultiplicativeExpression MultiplicativeOperator ExponentiationExpression` が一致し、右辺は `ExponentiationExpression` であることが期待されます。
+これが `DivPunctuator` トークンであるため、文法
+`MultiplicativeExpression: MultiplicativeExpression MultiplicativeOperator ExponentiationExpression`
+が一致し、右辺は `ExponentiationExpression` であることが期待されます。
 
-今度は `a / /` の2番目のスラッシュにいます。
-`ExponentiationExpression` に従っていくと、`RegularExpressionLiteral` に到達します。なぜなら、`RegularExpressionLiteral` が `/` と一致する唯一の文法だからです。
+今度は `a / /` の2番目のスラッシュにいます。 `ExponentiationExpression` に従って
+いくと、`RegularExpressionLiteral` に到達します。なぜな
+ら、`RegularExpressionLiteral` が `/` と一致する唯一の文法だからです。
 
 ```markup
 RegularExpressionLiteral ::
     / RegularExpressionBody / RegularExpressionFlags
 ```
 
-この2番目の `/` は `RegExp` としてトークン化されます。なぜなら、仕様が「RegularExpressionLiteral が許可されるすべての構文的文法コンテキストで InputElementRegExp ゴール記号が使用される」と述べているからです。
+この2番目の `/` は `RegExp` としてトークン化されます。なぜなら、仕様が
+「RegularExpressionLiteral が許可されるすべての構文的文法コンテキストで
+InputElementRegExp ゴール記号が使用される」と述べているからです。
 
-:::info
-練習として、`/=/ / /=/` の文法に従ってみてください。
-:::
+:::info練習として、`/=/ / /=/` の文法に従ってみてください。:::
 
 ---
 
 ## Cover Grammar
 
-まず、このトピックに関する [V8のブログ記事](https://v8.dev/blog/understanding-ecmascript-part-4) を読んでください。
+まず、このトピックに関する
+[V8のブログ記事](https://v8.dev/blog/understanding-ecmascript-part-4) を読んでく
+ださい。
 
 要約すると、仕様は次の3つの Cover Grammar を述べています：
 
@@ -563,18 +641,31 @@ let bar = (a, b, c) => {}; // ArrowExpression
           ^^^^^^^^^ CoverParenthesizedExpressionAndArrowParameterList
 ```
 
-この問題を解決するための単純で手間のかかるアプローチは、まず `Vec<Expression>` として解析し、
-それを `ArrowParameters` ノードに変換する変換関数を書くことです。つまり、各個別の `Expression` を `BindingPattern` に変換する必要があります。
+この問題を解決するための単純で手間のかかるアプローチは、まず `Vec<Expression>`
+として解析し、それを `ArrowParameters` ノードに変換する変換関数を書くことです。
+つまり、各個別の `Expression` を `BindingPattern` に変換する必要があります。
 
-なお、もしパーサー内でスコープツリーを構築している場合、
-つまり、パーサー内でアロー式のスコープを作成しているが、
-シーケンス式のスコープは作成していない場合、
-これをどのように行うかは明らかではありません。[esbuild](https://github.com/evanw/esbuild) は、一時的なスコープを作成し、
-それが `ArrowExpression` でない場合には削除することで、この問題を解決しています。
+なお、もしパーサー内でスコープツリーを構築している場合、つまり、パーサー内でア
+ロー式のスコープを作成しているが、シーケンス式のスコープは作成していない場合、こ
+れをどのように行うかは明らかではありませ
+ん。[esbuild](https://github.com/evanw/esbuild) は、一時的なスコープを作成し、そ
+れが `ArrowExpression` でない場合には削除することで、この問題を解決しています。
 
-これは、その [アーキテクチャドキュメント](https://github.com/evanw/esbuild/blob/master/docs/architecture.md#symbols-and-scopes) に記載されています:
+これは、その
+[アーキテクチャドキュメント](https://github.com/evanw/esbuild/blob/master/docs/architecture.md#symbols-and-scopes)
+に記載されています:
 
-> This is mostly pretty straightforward except for a few places where the parser has pushed a scope and is in the middle of parsing a declaration only to discover that it's not a declaration after all. This happens in TypeScript when a function is forward-declared without a body, and in JavaScript when it's ambiguous whether a parenthesized expression is an arrow function or not until we reach the => token afterwards. This would be solved by doing three passes instead of two so we finish parsing before starting to set up scopes and declare symbols, but we're trying to do this in just two passes. So instead we call popAndDiscardScope() or popAndFlattenScope() instead of popScope() to modify the scope tree later if our assumptions turn out to be incorrect.
+> This is mostly pretty straightforward except for a few places where the parser
+> has pushed a scope and is in the middle of parsing a declaration only to
+> discover that it's not a declaration after all. This happens in TypeScript
+> when a function is forward-declared without a body, and in JavaScript when
+> it's ambiguous whether a parenthesized expression is an arrow function or not
+> until we reach the => token afterwards. This would be solved by doing three
+> passes instead of two so we finish parsing before starting to set up scopes
+> and declare symbols, but we're trying to do this in just two passes. So
+> instead we call popAndDiscardScope() or popAndFlattenScope() instead of
+> popScope() to modify the scope tree later if our assumptions turn out to be
+> incorrect.
 
 ---
 
@@ -611,7 +702,8 @@ async (a, b, c) => {} // AsyncArrowFunction
 ^^^^^^^^^^^^^^^ CoverCallExpressionAndAsyncArrowHead
 ```
 
-これは奇妙に見えるかもしれませんが、`async` はキーワードではありません。最初の `async` は関数名です。
+これは奇妙に見えるかもしれませんが、`async` はキーワードではありません。最初の
+`async` は関数名です。
 
 ---
 
@@ -652,7 +744,9 @@ If LeftHandSideExpression is an ObjectLiteral or an ArrayLiteral, the following 
 ({ prop = value }); // SyntaxErrorを伴うObjectLiteral
 ```
 
-パーサーは `CoverInitializedName` を持つ `ObjectLiteral` を解析し、`ObjectAssignmentPattern` のための `=` に到達しない場合は構文エラーをスローする必要があります。
+パーサーは `CoverInitializedName` を持つ `ObjectLiteral` を解析
+し、`ObjectAssignmentPattern` のための `=` に到達しない場合は構文エラーをスロー
+する必要があります。
 
 練習として、次の `=` のうちどれが構文エラーをスローするでしょうか？
 
