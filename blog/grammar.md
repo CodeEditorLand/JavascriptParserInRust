@@ -9,7 +9,7 @@ details all the sweat and tears I had while learning it.
 
 ## LL(1) Grammar
 
-According to [Wikipedia](https://en.wikipedia.org/wiki/LL_grammar),
+According to [`Wikipedia`](https://en.wikipedia.org/wiki/LL_grammar),
 
 > an LL grammar is a context-free grammar that can be parsed by an LL parser,
 > which parses the input from Left to right
@@ -28,12 +28,12 @@ Unfortunately, most industrial programming languages do not have a nice LL(1)
 grammar, and this applies to JavaScript too.
 
 :::info Mozilla started the
-[jsparagus](https://github.com/mozilla-spidermonkey/jsparagus) project a few
+[`jsparagus`](https://github.com/mozilla-spidermonkey/jsparagus) project a few
 years ago and wrote a
-[LALR parser generator in Python](https://github.com/mozilla-spidermonkey/jsparagus/tree/master/jsparagus).
+[`LALR parser generator in Python`](https://github.com/mozilla-spidermonkey/jsparagus/tree/master/jsparagus).
 They haven't updated it much in the past two years and they sent a strong
 message at the end of
-[js-quirks.md](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md)
+[`js-quirks.md`](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md)
 
 > What have we learned today?
 >
@@ -180,7 +180,7 @@ Chrome throws this error with a mysterious message "Uncaught SyntaxError:
 Illegal 'use strict' directive in function with non-simple parameter list".
 
 A more in-depth explanation is described in
-[this blog post](https://humanwhocodes.com/blog/2016/10/the-ecmascript-2016-change-you-probably-dont-know/)
+[`this blog post`](https://humanwhocodes.com/blog/2016/10/the-ecmascript-2016-change-you-probably-dont-know/)
 by the author of ESLint.
 
 :::info
@@ -207,7 +207,7 @@ instance the AST for `((x))` can just be a single `IdentifierReference`, not
 And this is the case for JavaScript grammar.
 
 But ... who would have thought it can have run-time meanings. Found in
-[this estree issue](https://github.com/estree/estree/issues/194), it shows that
+[`this estree issue`](https://github.com/estree/estree/issues/194), it shows that
 
 ```javascript
 > fn = function () {};
@@ -614,7 +614,7 @@ where a RegularExpressionLiteral is permitted".
 
 ## Cover Grammar
 
-Read the [V8 blog post](https://v8.dev/blog/understanding-ecmascript-part-4) on
+Read the [`V8 blog post`](https://v8.dev/blog/understanding-ecmascript-part-4) on
 this topic first.
 
 To summarize, the specification states the following three cover grammars:
@@ -658,11 +658,11 @@ to a `BindingPattern`.
 It should be noted that, if we are building the scope tree within the parser,
 i.e. create the scope for arrow expression during parsing, but do not create one
 for a sequence expression, it is not obvious how to do this.
-[esbuild](https://github.com/evanw/esbuild) solved this problem by creating a
+[`esbuild`](https://github.com/evanw/esbuild) solved this problem by creating a
 temporary scope first, and then dropping it if it is not an `ArrowExpression`.
 
 This is stated in its
-[architecture document](https://github.com/evanw/esbuild/blob/master/docs/architecture.md#symbols-and-scopes):
+[`architecture document`](https://github.com/evanw/esbuild/blob/master/docs/architecture.md#symbols-and-scopes):
 
 > This is mostly pretty straightforward except for a few places where the parser
 > has pushed a scope and is in the middle of parsing a declaration only to

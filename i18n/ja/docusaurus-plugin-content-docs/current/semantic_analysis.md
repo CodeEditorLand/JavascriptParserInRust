@@ -61,7 +61,7 @@ Block : { StatementList }
 
 スコープツリーを追加する必要があります。スコープツリーには、その中で宣言されたすべての `var` と `let` が含まれます。
 また、親を指すツリーでもあり、親のスコープでバインディング識別子を検索するためにツリーを上に移動する必要があります。
-使用できるデータ構造は [`indextree`](https://docs.rs/indextree/latest/indextree/)です。
+使用できるデータ構造は [`indextree``](https://docs.rs/indextree/latest/indextree/)です。
 
 ```rust
 use indextree::{Arena, Node, NodeId};
@@ -83,16 +83,16 @@ bitflags! {
 
 #[derive(Debug, Clone)]
 pub struct Scope {
-    /// [Strict Mode Code](https://tc39.es/ecma262/#sec-strict-mode-code)
-    /// [Use Strict Directive Prologue](https://tc39.es/ecma262/#sec-directive-prologues-and-the-use-strict-directive)
+    /// [`Strict Mode Code`](https://tc39.es/ecma262/#sec-strict-mode-code)
+    /// [`Use Strict Directive Prologue`](https://tc39.es/ecma262/#sec-directive-prologues-and-the-use-strict-directive)
     pub strict_mode: bool,
 
     pub flags: ScopeFlags,
 
-    /// [Lexically Declared Names](https://tc39.es/ecma262/#sec-static-semantics-lexicallydeclarednames)
+    /// [`Lexically Declared Names`](https://tc39.es/ecma262/#sec-static-semantics-lexicallydeclarednames)
     pub lexical: IndexMap<Atom, SymbolId, FxBuildHasher>,
 
-    /// [Var Declared Names](https://tc39.es/ecma262/#sec-static-semantics-vardeclarednames)
+    /// [`Var Declared Names`](https://tc39.es/ecma262/#sec-static-semantics-vardeclarednames)
     pub var: IndexMap<Atom, SymbolId, FxBuildHasher>,
 
     /// Function Declarations
@@ -147,13 +147,13 @@ https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/a
 ```
 
 :::info
-このアプローチの欠点の1つは、アロー関数の場合、一時的なスコープを作成し、それがアロー関数ではなくシーケンス式である場合に後で削除する必要があるかもしれないことです。これについては、[ Cover Grammar ](/blog/grammar#cover-grammar)で詳しく説明しています。
+このアプローチの欠点の1つは、アロー関数の場合、一時的なスコープを作成し、それがアロー関数ではなくシーケンス式である場合に後で削除する必要があるかもしれないことです。これについては、[` Cover Grammar `](/blog/grammar#cover-grammar)で詳しく説明しています。
 :::
 
 ### ビジターパターン
 
 シンプルさのためにスコープツリーを別のパスで構築することを決定した場合、AST の各ノードを深さ優先の事前順序で訪れ、スコープツリーを構築する必要があります。
 
-[ビジターパターン](https://rust-unofficial.github.io/patterns/patterns/behavioural/visitor.html) を使用して、トラバーサルプロセスと各オブジェクトで実行される操作を分離することができます。
+[`ビジターパターン`](https://rust-unofficial.github.io/patterns/patterns/behavioural/visitor.html) を使用して、トラバーサルプロセスと各オブジェクトで実行される操作を分離することができます。
 
 訪問時には、`enter_scope` と `leave_scope` を適切に呼び出してスコープツリーを構築することができます。

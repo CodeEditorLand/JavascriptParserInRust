@@ -40,8 +40,8 @@ pub enum Kind {
 ```
 
 为了遍历字符串，我们可以如同写 C 代码那样维护一个索引；
-又或者我们可以查看 [str 的文档](https://doc.rust-lang.org/std/primitive.str.html#)
-并使用 [`Chars`](https://doc.rust-lang.org/std/str/struct.Chars.html) 迭代器。
+又或者我们可以查看 [`str 的文档`](https://doc.rust-lang.org/std/primitive.str.html#)
+并使用 [`Chars``](https://doc.rust-lang.org/std/str/struct.Chars.html) 迭代器。
 
 :::info
 `Chars` 迭代器抽象掉了索引的维护和边界检查等细节，让我们写代码的时候充满安全感。
@@ -108,13 +108,13 @@ impl<'a> Lexer<'a> {
 
 在 `fn offset` 中，`.len()` 和 `.as_str().len()` 方法看起来像是 O(n) 的，所以让我们进一步看看是否如此。
 
-[`.as_str()`](https://doc.rust-lang.org/src/core/str/iter.rs.html#112) 返回一个指向字符串切片的指针
+[`.as_str()``](https://doc.rust-lang.org/src/core/str/iter.rs.html#112) 返回一个指向字符串切片的指针
 
 ```rust reference
 https://github.com/rust-lang/rust/blob/b998821e4c51c44a9ebee395c91323c374236bbb/library/core/src/str/iter.rs#L112-L115
 ```
 
-切片 ([slice](https://doc.rust-lang.org/std/slice/index.html))是对一块内存的视图，它通过指针和长度表示。
+切片 ([`slice`](https://doc.rust-lang.org/std/slice/index.html))是对一块内存的视图，它通过指针和长度表示。
 `.len()` 方法返回切片内部存储的元数据
 
 ```rust reference
@@ -144,7 +144,7 @@ fn peek(&self) -> Option<char> {
 我们不希望直接前移 (advance) 原始的`chars`迭代器，因此我们克隆迭代器后再前移。
 
 :::info
-如果我们深入查看[源代码](https://doc.rust-lang.org/src/core/slice/iter.rs.html#148-152)，`clone`操作是非常廉价的，它只是复制了当前索引和索引边界。
+如果我们深入查看[`源代码`](https://doc.rust-lang.org/src/core/slice/iter.rs.html#148-152)，`clone`操作是非常廉价的，它只是复制了当前索引和索引边界。
 
 ```rust reference
 https://github.com/rust-lang/rust/blob/b998821e4c51c44a9ebee395c91323c374236bbb/library/core/src/slice/iter.rs#L148-L152
@@ -161,7 +161,7 @@ https://github.com/rust-lang/rust/blob/b998821e4c51c44a9ebee395c91323c374236bbb/
 
 有了`peek`，对`++`和`+=`进行分词只需要嵌套的if语句。
 
-以下是来自[jsparagus](https://github.com/mozilla-spidermonkey/jsparagus)的真实实现：
+以下是来自[`jsparagus`](https://github.com/mozilla-spidermonkey/jsparagus)的真实实现：
 
 ```rust reference
 https://github.com/mozilla-spidermonkey/jsparagus/blob/master/crates/parser/src/lexer.rs#L1769-L1791
@@ -175,10 +175,10 @@ https://github.com/mozilla-spidermonkey/jsparagus/blob/master/crates/parser/src/
 
 对 JavaScript 的词法分析才是真正有趣的部分。
 
-让我们打开[《ECMAScript语言规范》](https://tc39.es/ecma262/)并重新学习 JavaScript。
+让我们打开[`《ECMAScript语言规范》`](https://tc39.es/ecma262/)并重新学习 JavaScript。
 
 :::caution
-我仍然记得第一次打开规范时，我仅仅偷瞄了几个字就陷入痛苦、泪流满面，因为这就像是阅读到处都是术语黑话的外文文本。所以当你觉得哪里不对劲，可以去看看我的[阅读规范指南](/blog/ecma-spec)。
+我仍然记得第一次打开规范时，我仅仅偷瞄了几个字就陷入痛苦、泪流满面，因为这就像是阅读到处都是术语黑话的外文文本。所以当你觉得哪里不对劲，可以去看看我的[`阅读规范指南`](/blog/ecma-spec)。
 :::
 
 ### 注释
@@ -188,8 +188,8 @@ https://github.com/mozilla-spidermonkey/jsparagus/blob/master/crates/parser/src/
 ### 标识符和 Unicode
 
 我们大多数时候使用 ASCII 编码，
-但是[《ECMAScript语言规范: 源代码》第11章](https://tc39.es/ecma262/#sec-ecmascript-language-source-code) 规定源代码应该使用 Unicode 编码。
-而[第 12.6 章 名称和关键字](https://tc39.es/ecma262/#sec-names-and-keywords)规定，标识符 (identifier) 的解释遵循 Unicode 标准附录 31 中给出的默认标识符语法 (Default Identifier Syntax)。
+但是[`《ECMAScript语言规范: 源代码》第11章`](https://tc39.es/ecma262/#sec-ecmascript-language-source-code) 规定源代码应该使用 Unicode 编码。
+而[`第 12.6 章 名称和关键字`](https://tc39.es/ecma262/#sec-names-and-keywords)规定，标识符 (identifier) 的解释遵循 Unicode 标准附录 31 中给出的默认标识符语法 (Default Identifier Syntax)。
 具体来说：
 
 ```markup
@@ -211,14 +211,14 @@ UnicodeIDContinue ::
 
 :::info
 
-我发布了 [unicode-id-start](https://crates.io/crates/unicode-id-start) 这个 crate，用于这个特定目的。
+我发布了 [`unicode-id-start`](https://crates.io/crates/unicode-id-start) 这个 crate，用于这个特定目的。
 我们可以调用`unicode_id_start::is_id_start(char)`和`unicode_id_start::is_id_continue(char)`来检查 Unicode 。
 
 :::
 
 ### 关键字
 
-所有的[关键字](https://tc39.es/ecma262/#sec-keywords-and-reserved-words) (keywords)，比如`if`、`while`和`for`，
+所有的[`关键字`](https://tc39.es/ecma262/#sec-keywords-and-reserved-words) (keywords)，比如`if`、`while`和`for`，
 都需要视作一个整体进行分词。
 它们需要被添加到 token 种类的枚举中，这样我们就不必在解析器中进行字符串比较了。
 
@@ -304,9 +304,9 @@ Token { kind: Kind::String, start: 0, end: 4, value: TokenValue::String("bar") }
 然后用 `token.value = TokenValue::String(s)` 保存它。
 
 当我们分词一个数字 `1.23` 时，我们得到一个类似 `Token { start: 0, end: 3 }` 的 token。
-要将它转换为 Rust 的 `f64`，我们可以使用字符串的 [`parse`](https://doc.rust-lang.org/std/primitive.str.html#method.parse) 方法，
+要将它转换为 Rust 的 `f64`，我们可以使用字符串的 [`parse``](https://doc.rust-lang.org/std/primitive.str.html#method.parse) 方法，
 通过调用 `self.source[token.start..token.end].parse::<f64>()`，然后将值保存到 `token.value` 中。
-对于二进制、八进制和整数，可以在 [jsparagus](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/crates/parser/src/numeric_value.rs) 中找到解析它们的方法。
+对于二进制、八进制和整数，可以在 [`jsparagus`](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/crates/parser/src/numeric_value.rs) 中找到解析它们的方法。
 
 ## Rust 优化
 
@@ -332,12 +332,12 @@ pub enum Kind {
 - `String` 分配在堆上
 - `String`的比较是一个 O(n) 的操作
 
-[String Interning](https://en.wikipedia.org/wiki/String_interning) 通过在缓存中只存储每个不同字符串值的一个副本及其唯一标识以解决这些问题。
+[`String Interning`](https://en.wikipedia.org/wiki/String_interning) 通过在缓存中只存储每个不同字符串值的一个副本及其唯一标识以解决这些问题。
 每个不同标识符或字符串将只有一次堆分配，并且字符串比较变为 O(1)。
 
-在 [crates.io](https://crates.io/search?q=string%20interning) 上有许多 string interning 库，具有不同的优缺点。
+在 [`crates.io`](https://crates.io/search?q=string%20interning) 上有许多 string interning 库，具有不同的优缺点。
 
-在最开始，我们使用[`string-cache`](https://crates.io/crates/string_cache)便已够用，它有一个 `Atom` 类型和一个编译时的 `atom!("string")` 接口。
+在最开始，我们使用[`string-cache``](https://crates.io/crates/string_cache)便已够用，它有一个 `Atom` 类型和一个编译时的 `atom!("string")` 接口。
 
 使用 `string-cache` 后，`TokenValue` 需改为：
 

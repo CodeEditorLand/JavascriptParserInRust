@@ -2,7 +2,7 @@
 title: ECMAScript の仕様
 ---
 
-[ECMAScript® 2023言語仕様書](https://tc39.es/ecma262/) は、JavaScript について
+[`ECMAScript® 2023言語仕様書`](https://tc39.es/ecma262/) は、JavaScript について
 のすべての詳細を記載しており、誰でも独自の JavaScript エンジンを実装することがで
 きます。
 
@@ -24,7 +24,7 @@ title: ECMAScript の仕様
 
 ## 表記規則
 
-[第5.1.5節 文法表記](https://tc39.es/ecma262/#sec-grammar-notation) を読む必要が
+[`第5.1.5節 文法表記`](https://tc39.es/ecma262/#sec-grammar-notation) を読む必要が
 あります。
 
 ここで注意するべき点は次のとおりです：
@@ -90,7 +90,7 @@ ModuleItem :
 
 ## ソーステキスト
 
-[第11.2節 ソースコードの種類](https://tc39.es/ecma262/#sec-types-of-source-code)
+[`第11.2節 ソースコードの種類`](https://tc39.es/ecma262/#sec-types-of-source-code)
 では、スクリプトコードとモジュールコードの間には大きな違いがあることが述べられて
 います。また、古い JavaScript の振る舞いを禁止するための `use strict` モードがあ
 ります。
@@ -105,10 +105,10 @@ ModuleItem :
 ## ECMAScript言語：字句文法
 
 より詳細な説明については、V8 ブログの
-[ECMAScript仕様の理解](https://v8.dev/blog/understanding-ecmascript-part-3) を読
+[`ECMAScript仕様の理解`](https://v8.dev/blog/understanding-ecmascript-part-3) を読
 んでください。
 
-### [自動セミコロン挿入](https://tc39.es/ecma262/#sec-automatic-semicolon-insertion)
+### [`自動セミコロン挿入`](https://tc39.es/ecma262/#sec-automatic-semicolon-insertion)
 
 このセクションでは、JavaScript を書く際にセミコロンを省略できるルールについて説
 明しています。すべての説明は次のように要約されます
@@ -145,7 +145,7 @@ ModuleItem :
 この asi のセクションはパーサーを想定して書かれており、ソーステキストは左から右
 に解析されることが明示的に述べられています。これにより、他の方法でパーサーを書く
 ことはほとんど不可能になります。jsparagus の作者は
-[ここ](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md#automatic-semicolon-insertion-)
+[`ここ`](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md#automatic-semicolon-insertion-)
 でこれについての愚痴を述べています。
 
 > この機能の仕様は非常に高レベルであり、奇妙な手続き的なものです（「ソーステキス
@@ -159,6 +159,6 @@ ModuleItem :
 ## 式、文、関数、クラス、スクリプト、モジュール
 
 構文的な文法を理解し、それをパーサーの作成に適用するには時間がかかります。より詳
-細な内容は、[文法チュートリアル](./grammar.md) で見つけることができます。
+細な内容は、[`文法チュートリアル`](./grammar.md) で見つけることができます。
 
 ## 付録B

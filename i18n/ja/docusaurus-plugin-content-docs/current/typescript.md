@@ -4,7 +4,7 @@ title: TypeScript
 ---
 
 JavaScript を終えて、TypeScript の解析に挑戦したいと思っていますか？
-悪いニュースは、仕様が存在しないことですが、良いニュースは、TypeScript のパーサーが[ 単一のファイル](https://github.com/microsoft/TypeScript/blob/main/src/compiler/parser.ts) にあることです 🙃。
+悪いニュースは、仕様が存在しないことですが、良いニュースは、TypeScript のパーサーが[` 単一のファイル`](https://github.com/microsoft/TypeScript/blob/main/src/compiler/parser.ts) にあることです 🙃。
 
 ## JSX vs TSX
 
@@ -39,7 +39,7 @@ type B = { [a]: string }
 
 ### Arrow Expressions
 
-[Cover Grammar](/blog/grammar#cover-grammar) で議論されているように、`=>` トークンがSequenceExpressionの後に見つかった場合、`Expression` を`BindingPattern` に変換する必要があります。
+[`Cover Grammar`](/blog/grammar#cover-grammar) で議論されているように、`=>` トークンがSequenceExpressionの後に見つかった場合、`Expression` を`BindingPattern` に変換する必要があります。
 
 しかし、これは TypeScript では機能しません。`()` 内の各アイテムには TypeScript の構文が含まれる可能性があり、対応するケースが多すぎます。例えば：
 

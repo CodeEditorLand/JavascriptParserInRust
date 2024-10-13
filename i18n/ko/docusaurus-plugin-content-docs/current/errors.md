@@ -3,7 +3,7 @@ id: errors
 title: Dealing with Errors
 ---
 
-인용: [Dragon Book](https://www.amazon.com/Compilers-Principles-Techniques-Tools-2nd/dp/0321486811)
+인용: [`Dragon Book`](https://www.amazon.com/Compilers-Principles-Techniques-Tools-2nd/dp/0321486811)
 
 
 > 대부분의 프로그래밍 언어 사양에는 컴파일러가 오류에 어떻게 대응해야 하는지에 대한 설명이 없으며, 오류 처리는 컴파일러 설계자에게 맡겨져 있습니다.
@@ -20,7 +20,7 @@ linter나 formatter와 같은 도구의 경우, 프로그램 일부에 동작할
 대부분의 자바스크립트 파서는 부분적으로 복구가 가능하므로, 저희도 마찬가지로 부분적으로 복구 가능한 파서를 만들겠습니다.
 
 :::info
-[Rome](https://github.com/rome/tools) 은 완전 복구 가능한 파서입니다.
+[`Rome`](https://github.com/rome/tools) 은 완전 복구 가능한 파서입니다.
 :::
 
 Rust에는 오류를 반환하고 전파하기 위한 `Result` 타입이 있습니다.
@@ -96,7 +96,7 @@ pub enum SyntaxError {
 
 ECMAScript 사양의 문법 섹션에 정의된 모든 "early error"는 구문 오류이므로 이를 `SyntaxError`라고 부릅니다.
 
-이를 제대로 된 `Error`로 만들려면 [`Error` Trait](https://doc.rust-lang.org/std/error/trait.Error.html)를 구현해야 합니다. 더 깔끔한 코드를 위해 [`thiserror`](https://docs.rs/thiserror/latest/thiserror) crate에서 매크로를 사용할 수 있습니다:
+이를 제대로 된 `Error`로 만들려면 [`Error` Trait](https://doc.rust-lang.org/std/error/trait.Error.html)를 구현해야 합니다. 더 깔끔한 코드를 위해 [`thiserror``](https://docs.rs/thiserror/latest/thiserror) crate에서 매크로를 사용할 수 있습니다:
 
 ```rust
 #[derive(Debug, Error)]
@@ -138,14 +138,14 @@ fn parse_debugger_statement(&mut self) -> Result<Statement> {
 ```
 
 `expect` 뒤에 있는 `?`를 보세요,
-이것은 syntactic sugar ["question mark operator"](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator)으로 `expect` 함수가 `Err`를 반환하는 경우에 함수를 조기에 반환하는 것입니다.
+이것은 syntactic sugar [`"question mark operator"`](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator)으로 `expect` 함수가 `Err`를 반환하는 경우에 함수를 조기에 반환하는 것입니다.
 
 ### Fancy Error Report
 
-[`miette`](https://docs.rs/miette/latest/miette)는 가장 멋진 오류 보고 crete 중 하나입니다,
+[`miette``](https://docs.rs/miette/latest/miette)는 가장 멋진 오류 보고 crete 중 하나입니다,
 멋진 색상의 출력을 제공합니다.
 
-![miette](https://raw.githubusercontent.com/zkat/miette/main/images/serde_json.png)
+![`miette`](https://raw.githubusercontent.com/zkat/miette/main/images/serde_json.png)
 
 `miette`를 우리 `Cargo.toml`에 추가해보죠
 

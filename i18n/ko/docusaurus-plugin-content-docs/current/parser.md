@@ -3,7 +3,7 @@ id: parser
 title: Parser
 ---
 
-우리가 만들 파서를 [recursive descent parser](https://en.wikipedia.org/wiki/Recursive_descent_parser)라고 합니다,
+우리가 만들 파서를 [`recursive descent parser`](https://en.wikipedia.org/wiki/Recursive_descent_parser)라고 합니다,
 이는 문법을 따라 AST를 구축하는 수동 프로세스입니다.
 
 파서는 단순하게 시작하며, 소스코드, lexer, lexer에서 소비될 토큰을 갖습니다.
@@ -141,16 +141,16 @@ https://github.com/swc-project/swc/blob/554b459e26b24202f66c3c58a110b3f26bbd13cd
 ## Parsing Expressions
 
 표현식 문법은 깊게 중첩되고 재귀적입니다,
-따라서 긴 표현식에서는 스택 오버플로가 발생할 수 있습니다(예: [타입스크립트 테스트](https://github.com/microsoft/TypeScript/blob/main/tests/cases/compiler/binderBinaryExpressionStressJs.ts)),
+따라서 긴 표현식에서는 스택 오버플로가 발생할 수 있습니다(예: [`타입스크립트 테스트`](https://github.com/microsoft/TypeScript/blob/main/tests/cases/compiler/binderBinaryExpressionStressJs.ts)),
 
-재귀를 피하기 위해 "Pratt Parsing"이라는 기술을 사용할 수 있습니다. 더 자세한 튜토리얼은 [여기](https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html)에서 Rust-Analyzer 작성자가 작성한 튜토리얼을 확인할 수 있습니다.
-그리고 여기 [Rome](https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/syntax/expr.rs#L442)의 Rust 버전도 있습니다.
+재귀를 피하기 위해 "Pratt Parsing"이라는 기술을 사용할 수 있습니다. 더 자세한 튜토리얼은 [`여기`](https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html)에서 Rust-Analyzer 작성자가 작성한 튜토리얼을 확인할 수 있습니다.
+그리고 여기 [`Rome`](https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/syntax/expr.rs#L442)의 Rust 버전도 있습니다.
 
 ## Lists
 
 문장 부호로 구분된 목록을 파싱해야 하는 경우가 많이 있습니다(예: `[a, b, c]` 또는 `{a, b, c}`).
 
-목록을 파싱하는 코드는 모두 비슷하므로 [template method pattern](https://en.wikipedia.org/wiki/Template_method_pattern)을 사용하여 중복을 피할 수 있습니다.
+목록을 파싱하는 코드는 모두 비슷하므로 [`template method pattern`](https://en.wikipedia.org/wiki/Template_method_pattern)을 사용하여 중복을 피할 수 있습니다.
 
 ```rust reference
 https://github.com/rome/tools/blob/85ddb4b2c622cac9638d5230dcefb6cf571677f8/crates/rome_js_parser/src/parser/parse_lists.rs#L131-L157
@@ -166,7 +166,7 @@ https://github.com/rome/tools/blob/85ddb4b2c622cac9638d5230dcefb6cf571677f8/crat
 
 ## Cover Grammar
 
-[cover grammar](/blog/grammar#cover-grammar)에 자세히 설명되어 있지만, `Expression`을 `BindingIdentifier``로 변환해야 할 때가 있습니다. JavaScript와 같은 동적 언어는 노드 타입을 간단히 다시 작성할 수 있습니다:
+[`cover grammar`](/blog/grammar#cover-grammar)에 자세히 설명되어 있지만, `Expression`을 `BindingIdentifier``로 변환해야 할 때가 있습니다. JavaScript와 같은 동적 언어는 노드 타입을 간단히 다시 작성할 수 있습니다:
 
 ```javascript reference
 https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/lval.js#L11-L26

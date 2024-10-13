@@ -3,7 +3,7 @@ id: typescript
 title: TypeScript
 ---
 
-所以你已经完成了JavaScript，现在想要挑战解析TypeScript了？坏消息是没有规范，但好消息是TypeScript解析器在[一个单一文件](https://github.com/microsoft/TypeScript/blob/main/src/compiler/parser.ts)中 🙃。
+所以你已经完成了JavaScript，现在想要挑战解析TypeScript了？坏消息是没有规范，但好消息是TypeScript解析器在[`一个单一文件`](https://github.com/microsoft/TypeScript/blob/main/src/compiler/parser.ts)中 🙃。
 
 ## JSX vs TSX
 
@@ -37,7 +37,7 @@ type B = { [a]: string }
 
 ### 箭头表达式
 
-在[cover grammar](/blog/grammar#cover-grammar)中讨论过，当在 SequenceExpression 后面找到`=>` token 时，我们需要将`Expression`转换为`BindingPattern`。
+在[`cover grammar`](/blog/grammar#cover-grammar)中讨论过，当在 SequenceExpression 后面找到`=>` token 时，我们需要将`Expression`转换为`BindingPattern`。
 
 但是对于TypeScript来说，这种方法不适用，因为`()`中的每个项目都可能有TypeScript语法，有太多情况需要考虑，例如：
 

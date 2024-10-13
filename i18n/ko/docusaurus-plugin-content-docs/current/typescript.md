@@ -5,7 +5,7 @@ title: TypeScript
 
 자바스크립트 대신 타입스크립트 파싱에 도전하고 싶은가요?
 나쁜 소식은 사양이 없다는 것,
-좋은 소식은 타입스크립트 파서가 [단일 파일](https://github.com/microsoft/TypeScript/blob/main/src/compiler/parser.ts)이라는 것입니다 🙃.
+좋은 소식은 타입스크립트 파서가 [`단일 파일`](https://github.com/microsoft/TypeScript/blob/main/src/compiler/parser.ts)이라는 것입니다 🙃.
 
 ## JSX vs TSX
 
@@ -42,7 +42,7 @@ type B = { [a]: string }
 
 ### Arrow Expressions
 
-[cover grammar](/blog/grammar#cover-grammar)에서 설명했듯이 `=>` 토큰을 발견한다면, `Expression`에서 `BindingPattern`으로 변환할 필요가 있습니다.
+[`cover grammar`](/blog/grammar#cover-grammar)에서 설명했듯이 `=>` 토큰을 발견한다면, `Expression`에서 `BindingPattern`으로 변환할 필요가 있습니다.
 
 그러나 이 접근 방식은 `()` 안의 각 항목에 TypeScript 구문이 있을 수 있고, 예를 들어 다루어야 할 경우가 너무 많기 때문에 TypeScript에서는 작동하지 않습니다:
 

@@ -3,7 +3,7 @@ id: parser
 title: 構文解析器 (パーサー)
 ---
 
-私たちが構築しようとしているパーサーは、[再帰下降構文解析](https://en.wikipedia.org/wiki/Recursive_descent_parser) と呼ばれ、文法を下降して AST を構築する手法です。
+私たちが構築しようとしているパーサーは、[`再帰下降構文解析`](https://en.wikipedia.org/wiki/Recursive_descent_parser) と呼ばれ、文法を下降して AST を構築する手法です。
 
 パーサーはソースコード、レキサー、レキサーから返された現在のトークンを保持します。
 
@@ -140,16 +140,16 @@ https://github.com/swc-project/swc/blob/554b459e26b24202f66c3c58a110b3f26bbd13cd
 ## 式のパース
 
 式の文法は深くネストされており、再帰的です。
-これは、長い式（たとえば、[このTypeScriptのテスト](https://github.com/microsoft/TypeScript/blob/main/tests/cases/compiler/binderBinaryExpressionStressJs.ts)）でスタックオーバーフローを引き起こす可能性があります。
+これは、長い式（たとえば、[`このTypeScriptのテスト`](https://github.com/microsoft/TypeScript/blob/main/tests/cases/compiler/binderBinaryExpressionStressJs.ts)）でスタックオーバーフローを引き起こす可能性があります。
 
-再帰を避けるために、Prattパーシングと呼ばれるテクニックを使用することができます。詳細なチュートリアルは、Rust-Analyzer の作者によって書かれた [こちら](https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html) で見つけることができます。
-また、Rustのバージョンは [Rome](https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/syntax/expr.rs#L442) で確認できます。
+再帰を避けるために、Prattパーシングと呼ばれるテクニックを使用することができます。詳細なチュートリアルは、Rust-Analyzer の作者によって書かれた [`こちら`](https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html) で見つけることができます。
+また、Rustのバージョンは [`Rome`](https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/syntax/expr.rs#L442) で確認できます。
 
 ## リスト
 
 区切り記号で区切られたリストをパースする必要がある場所がたくさんあります。たとえば、`[a, b, c]` や `{a, b, c}` です。
 
-リストのパースのコードはすべて似ているため、[テンプレートメソッドパターン](https://en.wikipedia.org/wiki/Template_method_pattern) を使用して重複を避けることができます。
+リストのパースのコードはすべて似ているため、[`テンプレートメソッドパターン`](https://en.wikipedia.org/wiki/Template_method_pattern) を使用して重複を避けることができます。
 
 ```rust reference
 https://github.com/rome/tools/blob/85ddb4b2c622cac9638d5230dcefb6cf571677f8/crates/rome_js_parser/src/parser/parse_lists.rs#L131-L157
@@ -165,7 +165,7 @@ https://github.com/rome/tools/blob/85ddb4b2c622cac9638d5230dcefb6cf571677f8/crat
 
 ## Cover Grammar
 
-[Cover Grammar](/blog/grammar#cover-grammar) で詳細に説明されているように、`Expression` を `BindingIdentifier` に変換する必要がある場合があります。JavaScript のような動的言語では、ノードのタイプを単純に書き換えることができます。
+[`Cover Grammar`](/blog/grammar#cover-grammar) で詳細に説明されているように、`Expression` を `BindingIdentifier` に変換する必要がある場合があります。JavaScript のような動的言語では、ノードのタイプを単純に書き換えることができます。
 
 ```javascript reference
 https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/lval.js#L11-L26

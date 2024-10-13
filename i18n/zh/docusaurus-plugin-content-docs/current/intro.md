@@ -3,7 +3,7 @@ id: intro
 title: 介绍
 ---
 
-我们正处于 [JavaScript 的第三时代](https://www.swyx.io/js-third-age/)，
+我们正处于 [`JavaScript 的第三时代`](https://www.swyx.io/js-third-age/)，
 目前的普遍趋势是使用 Rust 或 Go 编写 JavaScript 工具以获得更好的性能。
 
 但是编写 JavaScript 工具本身就很具有挑战性，更不用说用 Rust 来编写它们了。

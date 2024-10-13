@@ -17,7 +17,7 @@ title: Abstract Syntax Tree
 
 ## Getting familiar with the AST(AST와 친해지기)
 
-AST와 친해지기 위해 [ASTExplorer](https://astexplorer.net/)를 방문하여 어떤 모습인지 살펴봅시다.
+AST와 친해지기 위해 [`ASTExplorer`](https://astexplorer.net/)를 방문하여 어떤 모습인지 살펴봅시다.
 상단 패널에서 JavaScript를 선택한 다음 `acron`를 선택하고 `var a`를 입력하면 트리 뷰와 JSON 뷰가 표시됩니다.
 
 ```json
@@ -56,8 +56,8 @@ AST와 친해지기 위해 [ASTExplorer](https://astexplorer.net/)를 방문하�
 
 ## estree
 
-[estree](https://github.com/estree/estree)는 자바스크립트를 위한 커뮤니티 표준 문법 사양입니다,
-[모든 AST 노드](https://github.com/estree/estree/blob/master/es5.md)를 정의하여 다양한 도구가 서로 호환될 수 있도록
+[`estree`](https://github.com/estree/estree)는 자바스크립트를 위한 커뮤니티 표준 문법 사양입니다,
+[`모든 AST 노드`](https://github.com/estree/estree/blob/master/es5.md)를 정의하여 다양한 도구가 서로 호환될 수 있도록
 서로 호환될 수 있도록 정의합니다.
 
 모든 AST 노드의 기본 빌딩 블록은 `Node` 타입입니다:
@@ -135,17 +135,17 @@ pub struct YieldExpression {
 Rust에서는 self-referential struct가 허용되지 않기 때문에 `Box`가 필요합니다.
 
 :::info
-자바스크립트 문법에는 귀찮은 부분이 많으니 [grammar tutorial](/blog/grammar)을 한 번 확인해주세요.
+자바스크립트 문법에는 귀찮은 부분이 많으니 [`grammar tutorial`](/blog/grammar)을 한 번 확인해주세요.
 :::
 
 ## Rust Optimizations
 
 ### Memory Allocations
 
-[Overview](./overview.md) 장으로 돌아갑니다,
+[`Overview`](./overview.md) 장으로 돌아갑니다,
 힙 할당 비용이 저렴하지 않기 때문에 `Vec`, `Box`와 같은 힙 할당 구조체를 주의해야 한다고 간략하게 언급했습니다.
 
-[swc의 실제 구현](https://github.com/swc-project/swc/blob/main/crates/swc_ecma_ast/src/expr.rs)을 살펴보세요,
+[`swc의 실제 구현`](https://github.com/swc-project/swc/blob/main/crates/swc_ecma_ast/src/expr.rs)을 살펴보세요,
 AST에는 많은 `Box`와 `Vec`이 있을 수 있으며, `Statement`와 `Expression` 열거형에는 열거형 변형을 포함하고 있습니다.
 
 ### Enum Size
@@ -164,7 +164,7 @@ enum Name {
 ```
 
 :::note
-이 예는 [블로그](https://adeschamps.github.io/enum-size) 에서 가져온 것입니다
+이 예는 [`블로그`](https://adeschamps.github.io/enum-size) 에서 가져온 것입니다
 :::
 
 `Expression`와 `Statement`의 경우 현재 설정으로 최대 200바이트 이상을 사용할 수 있습니다.
@@ -235,10 +235,10 @@ AST에 글로벌 메모리 할당기를 사용하는 것은 실제로 효율적�
 메모리를 미리 할당하고 한 번에 삭제하는 것입니다.
 
 :::info
-[블로그](https://manishearth.github.io/blog/2021/03/15/arenas-in-rust/)에 메모리 구역에 대해 자세히 설명합니다.
+[`블로그`](https://manishearth.github.io/blog/2021/03/15/arenas-in-rust/)에 메모리 구역에 대해 자세히 설명합니다.
 :::
 
-[`bumpalo`](https://docs.rs/bumpalo/latest/bumpalo/)는 우리의 사용 사례에 매우 적합한 후보입니다:
+[`bumpalo``](https://docs.rs/bumpalo/latest/bumpalo/)는 우리의 사용 사례에 매우 적합한 후보입니다:
 
 > 범프 할당은 빠르지만 할당에 제한적인 접근 방식입니다.
 > 우리는 메모리 chunk를 가지고, 메모리 내에 포인터를 유지합니다. 객체를 할당할 때 마다,
@@ -279,7 +279,7 @@ pub struct YieldExpression<'a> {
 
 ## JSON Serialization
 
-[serde](https://serde.rs/)를 사용하여 AST를 JSON으로 직렬화할 수 있습니다. `estree`와 호환되도록 하려면 몇 가지 기술이 필요합니다.
+[`serde`](https://serde.rs/)를 사용하여 AST를 JSON으로 직렬화할 수 있습니다. `estree`와 호환되도록 하려면 몇 가지 기술이 필요합니다.
 다음은 몇 가지 예입니다:
 
 ```rust

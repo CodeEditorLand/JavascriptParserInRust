@@ -3,7 +3,7 @@ id: parser
 title: 解析器 (Parser)
 ---
 
-我们将要构建的解析器称为[递归下降解析器](https://en.wikipedia.org/wiki/Recursive_descent_parser)，它是一个手动过程，顺着语法逐步构建AST。
+我们将要构建的解析器称为[`递归下降解析器`](https://en.wikipedia.org/wiki/Recursive_descent_parser)，它是一个手动过程，顺着语法逐步构建AST。
 
 解析器起初很简单，它持有源代码、词法分析器和从词法分析器中获取的当前 token。
 
@@ -138,16 +138,16 @@ https://github.com/swc-project/swc/blob/554b459e26b24202f66c3c58a110b3f26bbd13cd
 
 ## 解析表达式
 
-表达式的语法嵌套深且递归，这可能会导致长表达式时出现堆栈溢出（例如[这个 TypeScript 测试](https://github.com/microsoft/TypeScript/blob/main/tests/cases/compiler/binderBinaryExpressionStressJs.ts)）。
+表达式的语法嵌套深且递归，这可能会导致长表达式时出现堆栈溢出（例如[`这个 TypeScript 测试`](https://github.com/microsoft/TypeScript/blob/main/tests/cases/compiler/binderBinaryExpressionStressJs.ts)）。
 
-为了避免递归，我们可以使用"Pratt Parsing"。可以在这里找到更深入的教程[Pratt Parsing](https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html)，此文作者同时也是Rust-Analyzer的作者。
-Rome中的Rust版本在[Rome](https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/syntax/expr.rs#L442)。
+为了避免递归，我们可以使用"Pratt Parsing"。可以在这里找到更深入的教程[`Pratt Parsing`](https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html)，此文作者同时也是Rust-Analyzer的作者。
+Rome中的Rust版本在[`Rome`](https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/syntax/expr.rs#L442)。
 
 ## 列表
 
 有许多地方需要解析以标点分隔的列表，例如`[a, b, c]`和`{a, b, c}`。
 
-解析列表的代码大同小异，我们可以使用[模板方法模式](https://en.wikipedia.org/wiki/Template_method_pattern)通过使用 trait 来避免重复。
+解析列表的代码大同小异，我们可以使用[`模板方法模式`](https://en.wikipedia.org/wiki/Template_method_pattern)通过使用 trait 来避免重复。
 
 ```rust reference
 https://github.com/rome/tools/blob/85ddb4b2c622cac9638d5230dcefb6cf571677f8/crates/rome_js_parser/src/parser/parse_lists.rs#L131-L157
@@ -163,7 +163,7 @@ https://github.com/rome/tools/blob/85ddb4b2c622cac9638d5230dcefb6cf571677f8/crat
 
 ## 覆盖语法
 
-我们在[覆盖语法](/blog/grammar#cover-grammar)中详细介绍过，有时我们需要将`Expression`转换为`BindingIdentifier`。若使用JavaScript这样的动态语言，则可以简单地重写节点类型：
+我们在[`覆盖语法`](/blog/grammar#cover-grammar)中详细介绍过，有时我们需要将`Expression`转换为`BindingIdentifier`。若使用JavaScript这样的动态语言，则可以简单地重写节点类型：
 
 ```javascript reference
 https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/lval.js#L11-L26

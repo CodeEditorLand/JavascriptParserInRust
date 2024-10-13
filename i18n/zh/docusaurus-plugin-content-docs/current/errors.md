@@ -3,7 +3,7 @@ id: errors
 title: 处理错误
 ---
 
-以下引用自 [龙书](https://www.amazon.com/Compilers-Principles-Techniques-Tools-2nd/dp/0321486811)：
+以下引用自 [`龙书`](https://www.amazon.com/Compilers-Principles-Techniques-Tools-2nd/dp/0321486811)：
 
 > 大多数编程语言规范并未描述编译器应该如何响应错误；错误处理留给了编译器设计者。
 > 从一开始就规划错误处理不仅可以简化编译器的结构，还能改善其错误处理能力。
@@ -18,7 +18,7 @@ title: 处理错误
 目前大多数 JavaScript 解析器都是部分可恢复的，因此我们也将构建一个部分可恢复的解析器。
 
 :::信息
-[Rome](https://github.com/rome/tools) 解析器是一个完全可恢复的解析器。
+[`Rome`](https://github.com/rome/tools) 解析器是一个完全可恢复的解析器。
 :::
 
 Rust 使用 `Result` 类型来返回和传播错误。
@@ -92,7 +92,7 @@ pub enum SyntaxError {
 
 我们称之为 `SyntaxError`，因为在 ECMAScript 规范的语法部分里定义的所有"早期错误 (early errors)"都是语法错误。
 
-为了使其成为一个合适的 `Error`，它需要实现 [`Error` trait](https://doc.rust-lang.org/std/error/trait.Error.html)。为了使代码更清晰，我们可以使用 [`thiserror`](https://docs.rs/thiserror/latest/thiserror) crate 中的宏：
+为了使其成为一个合适的 `Error`，它需要实现 [`Error` trait](https://doc.rust-lang.org/std/error/trait.Error.html)。为了使代码更清晰，我们可以使用 [`thiserror``](https://docs.rs/thiserror/latest/thiserror) crate 中的宏：
 
 ```rust
 #[derive(Debug, Error)]
@@ -133,13 +133,13 @@ fn parse_debugger_statement(&mut self) -> Result<Statement> {
 }
 ```
 
-请注意，在 `expect` 后面的 `?` 是一种语法糖，称为 ["问号操作符"](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator)，用于使函数在 `expect` 返回 `Err` 时提前返回。
+请注意，在 `expect` 后面的 `?` 是一种语法糖，称为 [`"问号操作符"`](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator)，用于使函数在 `expect` 返回 `Err` 时提前返回。
 
 ### 精美的错误报告
 
-[`miette`](https://docs.rs/miette/latest/miette) 是其中一个最好的错误报告 crate，它提供了精美的彩色输出：
+[`miette``](https://docs.rs/miette/latest/miette) 是其中一个最好的错误报告 crate，它提供了精美的彩色输出：
 
-![miette](https://raw.githubusercontent.com/zkat/miette/main/images/serde_json.png)
+![`miette`](https://raw.githubusercontent.com/zkat/miette/main/images/serde_json.png)
 
 将 `miette` 添加到你的 `Cargo.toml`：
 

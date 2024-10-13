@@ -10,10 +10,10 @@ Rome は、JavaScript と TypeScript のパースに様々な技術を使用し�
 ## 歴史
 
 -   Rome のコードベースは TypeScript から Rust に書き直されました。詳細は
-    [Rome will be rewritten in Rust](https://web.archive.org/web/20230401084626/https://rome.tools/blog/2021/09/21/rome-will-be-rewritten-in-rust/)
+    [`Rome will be rewritten in Rust`](https://web.archive.org/web/20230401084626/https://rome.tools/blog/2021/09/21/rome-will-be-rewritten-in-rust/)
     をご覧ください。
--   この決定は、[rslint](https://github.com/rslint/rslint) と
-    [rust-analyzer](https://github.com/rust-lang/rust-analyzer) の作者との話し合
+-   この決定は、[`rslint`](https://github.com/rslint/rslint) と
+    [`rust-analyzer`](https://github.com/rust-lang/rust-analyzer) の作者との話し合
     いの結果行われました。
 -   rust-analyzer は、IDE のようなツールを具象構文木をベースに構築できることを証
     明しました。
@@ -24,35 +24,35 @@ Rome は、JavaScript と TypeScript のパースに様々な技術を使用し�
 
 ## 具象構文木 (CST)
 
--   ベースライブラリは [rowan](https://github.com/rust-analyzer/rowan) と呼ばれ
+-   ベースライブラリは [`rowan`](https://github.com/rust-analyzer/rowan) と呼ばれ
     ており、詳細は
-    [overview of rowan](https://github.com/rust-lang/rust-analyzer/blob/master/docs/dev/syntax.md)
+    [`overview of rowan`](https://github.com/rust-lang/rust-analyzer/blob/master/docs/dev/syntax.md)
     をご覧ください。
 -   Rowan (red-green trees としても知られている) は、赤いベリーを実らせる
-    [Rowan](https://en.wikipedia.org/wiki/Rowan) という木にちなんで名付けられま
+    [`Rowan`](https://en.wikipedia.org/wiki/Rowan) という木にちなんで名付けられま
     した。
 -   red-green trees の由来は、C# の作者によ
-    る[ブログ記事](https://ericlippert.com/2012/06/08/red-green-trees/)で説明さ
+    る[`ブログ記事`](https://ericlippert.com/2012/06/08/red-green-trees/)で説明さ
     れています。
 -   Rowan は、ソースコードのすべてを記述する損失のない CST を定義し、構文木の
     親、子、兄弟ノードなどを走査する一連の API を提供します。
 -   AST よりも CST を利用する利点について
-    は、[Pure AST based linting sucks](https://rdambrosio016.github.io/rust/2020/09/18/pure-ast-based-linting-sucks.html)
+    は、[`Pure AST based linting sucks`](https://rdambrosio016.github.io/rust/2020/09/18/pure-ast-based-linting-sucks.html)
     をご覧ください。
 -   CST は完全に回復可能なパーサーを構築する手段を提供します。
 
 ## 文法
 
 -   AST と同様に文法を定義する必要があります。文法
-    は、[xtask/codegen](https://github.com/rome/tools/tree/main/xtask/codegen)
+    は、[`xtask/codegen`](https://github.com/rome/tools/tree/main/xtask/codegen)
     を使用して自動生成されます。
--   文法は [ungrammar](https://github.com/rust-analyzer/ungrammar) という DSL か
+-   文法は [`ungrammar`](https://github.com/rust-analyzer/ungrammar) という DSL か
     ら生成されます。
 -   入力の `ungrammar` の ソースファイル
-    は、[xtask/codegen/js.ungram](https://github.com/rome/tools/blob/main/xtask/codegen/js.ungram)
+    は、[`xtask/codegen/js.ungram`](https://github.com/rome/tools/blob/main/xtask/codegen/js.ungram)
     にあります。
 -   生成されるコードは、
-    [rome_js_syntax/src/generated](https://github.com/rome/tools/tree/main/crates/rome_js_syntax/src/generated)
+    [`rome_js_syntax/src/generated`](https://github.com/rome/tools/tree/main/crates/rome_js_syntax/src/generated)
     にあります。
 
 ## エントリーポイント
@@ -84,15 +84,15 @@ https://github.com/rome/tools/blob/9815467c66688773bc1bb6ef9a5b2d86ca7b3682/crat
 
 ## コントリビューション
 
--   [CONTRIBUTING.md](https://github.com/rome/tools/blob/main/CONTRIBUTING.md)
+-   [`CONTRIBUTING.md`](https://github.com/rome/tools/blob/main/CONTRIBUTING.md)
     には、コントリビューションの方法の説明があります。
 -   パーサーのテストについて
-    は、[`cargo codegen test`](https://github.com/rome/tools/tree/main/xtask/codegen#cargo-codegen-test)
+    は、[`cargo codegen test``](https://github.com/rome/tools/tree/main/xtask/codegen#cargo-codegen-test)
     をご確認ください。
 -   適合テストについては、
-    [`cargo coverage`](https://github.com/rome/tools/tree/main/xtask/coverage)
+    [`cargo coverage``](https://github.com/rome/tools/tree/main/xtask/coverage)
     をご覧ください。
--   分からないことがあれば、[Discord サーバー](https://discord.com/invite/rome)
+-   分からないことがあれば、[`Discord サーバー`](https://discord.com/invite/rome)
     で自由に質問できます。
 
 :::info JavaScript / TypeScript パーサーは 99% 完成しています。コントリビュー

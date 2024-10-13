@@ -61,7 +61,7 @@ Block : { StatementList }
 
 스코프 트리를 추가해야 합니다. 스코프 트리는 그 안에 선언된 모든 `var`와 `let`을 포함합니다.
 또한 트리를 탐색하고 상위 스코프에서 바인딩 식별자를 검색하려는 상위 포인팅 트리이기도 합니다.
-우리가 사용할 수 있는 데이터 구조는 [`indextree`](https://docs.rs/indextree/latest/indextree/)입니다.
+우리가 사용할 수 있는 데이터 구조는 [`indextree``](https://docs.rs/indextree/latest/indextree/)입니다.
 
 ```rust
 use indextree::{Arena, Node, NodeId};
@@ -83,16 +83,16 @@ bitflags! {
 
 #[derive(Debug, Clone)]
 pub struct Scope {
-    /// [Strict Mode Code](https://tc39.es/ecma262/#sec-strict-mode-code)
-    /// [Use Strict Directive Prologue](https://tc39.es/ecma262/#sec-directive-prologues-and-the-use-strict-directive)
+    /// [`Strict Mode Code`](https://tc39.es/ecma262/#sec-strict-mode-code)
+    /// [`Use Strict Directive Prologue`](https://tc39.es/ecma262/#sec-directive-prologues-and-the-use-strict-directive)
     pub strict_mode: bool,
 
     pub flags: ScopeFlags,
 
-    /// [Lexically Declared Names](https://tc39.es/ecma262/#sec-static-semantics-lexicallydeclarednames)
+    /// [`Lexically Declared Names`](https://tc39.es/ecma262/#sec-static-semantics-lexicallydeclarednames)
     pub lexical: IndexMap<Atom, SymbolId, FxBuildHasher>,
 
-    /// [Var Declared Names](https://tc39.es/ecma262/#sec-static-semantics-vardeclarednames)
+    /// [`Var Declared Names`](https://tc39.es/ecma262/#sec-static-semantics-vardeclarednames)
     pub var: IndexMap<Atom, SymbolId, FxBuildHasher>,
 
     /// Function Declarations
@@ -149,13 +149,13 @@ https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/a
 :::info
 이 접근 방식의 단점 중 하나는 화살표 함수의 경우,
 화살표 함수가 아니라 시퀀스 표현식인 경우 임시 범위를 생성한 다음 나중에 삭제해야 할 수 있습니다.
-이에 대한 자세한 내용은 [cover grammar](/blog/grammar#cover-grammar)에서 확인할 수 있습니다.
+이에 대한 자세한 내용은 [`cover grammar`](/blog/grammar#cover-grammar)에서 확인할 수 있습니다.
 :::
 
 ### The Visitor Pattern
 
 간소화를 위해 다른 패스에서 스코프 트리를 빌드하기로 결정한 경우, AST의 모든 노드를 깊이 우선 선순위로 방문하고 스코프 트리를 빌드해야 합니다.
 
-[Visitor Pattern](https://rust-unofficial.github.io/patterns/patterns/behavioural/visitor.html)을 사용하여 각 객체에서 수행되는 작업에서 traversal process를 분리할 수 있습니다.
+[`Visitor Pattern`](https://rust-unofficial.github.io/patterns/patterns/behavioural/visitor.html)을 사용하여 각 객체에서 수행되는 작업에서 traversal process를 분리할 수 있습니다.
 
 방문 시 `enter_scope`와 `leave_scope`를 적절히 호출하여 스코프 트리를 구축할 수 있습니다.

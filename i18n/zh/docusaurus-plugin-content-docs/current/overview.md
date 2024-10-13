@@ -30,7 +30,7 @@ Rust 为我们提供了零成本抽象的能力，我们不必过于担心抽象
 只要注意算法的复杂性，我们就能一切顺利。
 
 :::info
-你也应该读 [The Rust Performance Book](https://nnethercote.github.io/perf-book/introduction.html).
+你也应该读 [`The Rust Performance Book`](https://nnethercote.github.io/perf-book/introduction.html).
 :::
 
 ## Rust 源代码
