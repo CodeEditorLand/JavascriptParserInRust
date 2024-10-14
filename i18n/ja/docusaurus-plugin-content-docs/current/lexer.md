@@ -39,7 +39,7 @@ pub enum Kind {
 ]
 ```
 
-文字列をループ処理するには、インデックスを記録して C 言語のコードを書くようにもできるし、[`string のドキュメント](https://doc.rust-lang.org/std/primitive.str.html)を見れば気づくように [`Chars``](https://doc.rust-lang.org/std/str/struct.Chars.html) のイテレーターで書くこともできます。
+文字列をループ処理するには、インデックスを記録して C 言語のコードを書くようにもできるし、[`string のドキュメント](https://doc.rust-lang.org/std/primitive.str.html)を見れば気づくように [`Chars`](https://doc.rust-lang.org/std/str/struct.Chars.html) のイテレーターで書くこともできます。
 
 :::info
 `Chars` のイテレーターは、インデックスをトラッキングして境界のチェックを行う抽象的な方法で、安全だと感じられます。
@@ -106,7 +106,7 @@ impl<'a> Lexer<'a> {
 
 `fn offset` の内部で呼ばれる `.len()` と `.as_str().len()` のメソッドは O(n) のように感じられるので、より深く掘り下げてみましょう。
 
-[`.as_str()``](https://doc.rust-lang.org/src/core/str/iter.rs.html#112) は文字列のスライスへのポインターを返します。
+[`.as_str()`](https://doc.rust-lang.org/src/core/str/iter.rs.html#112) は文字列のスライスへのポインターを返します。
 
 ```rust reference
 https://github.com/rust-lang/rust/blob/b998821e4c51c44a9ebee395c91323c374236bbb/library/core/src/str/iter.rs#L112-L115
@@ -298,7 +298,7 @@ Token { kind: Kind::String, start: 0, end: 4, value: TokenValue::String("bar") }
 これらを Rust の文字列へ変換するには、`let s = self.source[token.start..token.end].to_string()` を呼んで `token.value = TokenValue::String(s)` として保存します。
 
 数値 `1.23` をトークン化すると、`Token { start: 0, end: 3 }` がトークンとして返されます。
-これを Rust の `f64` へ変換するには、`self.source[`token.start..token.end].parse::<f64>()` を呼ぶことで文字列の [`parse``](https://doc.rust-lang.org/std/primitive.str.html#method.parse) メソッドを使うことが出来て、
+これを Rust の `f64` へ変換するには、`self.source[`token.start..token.end].parse::<f64>()` を呼ぶことで文字列の [`parse`](https://doc.rust-lang.org/std/primitive.str.html#method.parse) メソッドを使うことが出来て、
 `token.value` へ値を保存します。
 2 進数、8 進数、整数については、[`jsparagus`](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/crates/parser/src/numeric_value.rs) において解析するテクニックの例を確認できます。
 
@@ -331,7 +331,7 @@ pub enum Kind {
 
 [`crates.io`](https://crates.io/search?q=string%20interning) には、長所や短所も異なる文字列のインターン化のライブラリーが多くあります。
 
-スタートの時点で十分なものとして [`string-cache``](https://crates.io/crates/string_cache) があり、これは `Atom` 型とコンパイル時の `atom!("string")` のインターフェイスを持ちます。
+スタートの時点で十分なものとして [`string-cache`](https://crates.io/crates/string_cache) があり、これは `Atom` 型とコンパイル時の `atom!("string")` のインターフェイスを持ちます。
 
 `string-cache` で `TokenValue` はこのようになり、
 

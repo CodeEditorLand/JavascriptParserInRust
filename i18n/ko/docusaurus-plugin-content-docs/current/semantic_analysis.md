@@ -61,7 +61,7 @@ Block : { StatementList }
 
 스코프 트리를 추가해야 합니다. 스코프 트리는 그 안에 선언된 모든 `var`와 `let`을 포함합니다.
 또한 트리를 탐색하고 상위 스코프에서 바인딩 식별자를 검색하려는 상위 포인팅 트리이기도 합니다.
-우리가 사용할 수 있는 데이터 구조는 [`indextree``](https://docs.rs/indextree/latest/indextree/)입니다.
+우리가 사용할 수 있는 데이터 구조는 [`indextree`](https://docs.rs/indextree/latest/indextree/)입니다.
 
 ```rust
 use indextree::{Arena, Node, NodeId};

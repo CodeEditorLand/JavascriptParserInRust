@@ -238,7 +238,7 @@ AST에 글로벌 메모리 할당기를 사용하는 것은 실제로 효율적�
 [`블로그`](https://manishearth.github.io/blog/2021/03/15/arenas-in-rust/)에 메모리 구역에 대해 자세히 설명합니다.
 :::
 
-[`bumpalo``](https://docs.rs/bumpalo/latest/bumpalo/)는 우리의 사용 사례에 매우 적합한 후보입니다:
+[`bumpalo`](https://docs.rs/bumpalo/latest/bumpalo/)는 우리의 사용 사례에 매우 적합한 후보입니다:
 
 > 범프 할당은 빠르지만 할당에 제한적인 접근 방식입니다.
 > 우리는 메모리 chunk를 가지고, 메모리 내에 포인터를 유지합니다. 객체를 할당할 때 마다,

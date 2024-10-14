@@ -93,7 +93,7 @@ pub enum SyntaxError {
 
 これを `SyntaxError` と呼びます。なぜなら、ECMAScript 仕様の文法セクションで定義されているすべての「早期エラー」は構文エラーだからです。
 
-これを正しい `Error` にするためには、[`Error` トレイト](https://doc.rust-lang.org/std/error/trait.Error.html)を実装する必要があります。よりクリーンなコードのために、[`thiserror``](https://docs.rs/thiserror/latest/thiserror) クレートのマクロを使用できます。
+これを正しい `Error` にするためには、[`Error` トレイト](https://doc.rust-lang.org/std/error/trait.Error.html)を実装する必要があります。よりクリーンなコードのために、[`thiserror`](https://docs.rs/thiserror/latest/thiserror) クレートのマクロを使用できます。
 
 ```rust
 #[derive(Debug, Error)]
@@ -139,7 +139,7 @@ fn parse_debugger_statement(&mut self) -> Result<Statement> {
 
 ### Fancy Error Report
 
-[`miette``](https://docs.rs/miette/latest/miette) は最も素敵なエラーレポートクレートの 1 つであり、
+[`miette`](https://docs.rs/miette/latest/miette) は最も素敵なエラーレポートクレートの 1 つであり、
 視覚的に洗練された出力を提供します。
 
 ![`miette`](https://raw.githubusercontent.com/zkat/miette/main/images/serde_json.png)

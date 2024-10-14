@@ -39,7 +39,7 @@ pub enum Kind {
 ]
 ```
 
-문자열을 반복문 처리하려면 인덱스를 기록하여 C 언어로 코드를 작성할 수도 있고, [`string 문서](https://doc.rust-lang.org/std/primitive.str.html)를 보면 알 수 있듯이 [`Chars``]( https://doc.rust-lang.org/std/str/struct.Chars.html)의 이터레이터로 작성할 수도 있습니다.
+문자열을 반복문 처리하려면 인덱스를 기록하여 C 언어로 코드를 작성할 수도 있고, [`string 문서](https://doc.rust-lang.org/std/primitive.str.html)를 보면 알 수 있듯이 [`Chars`]( https://doc.rust-lang.org/std/str/struct.Chars.html)의 이터레이터로 작성할 수도 있습니다.
 
 :::info
 `Chars` 이터레이터는 인덱스를 트래킹해서 범위를 확인하는 추상적 방법으로 안전하다 느낄 수 있습니다.
@@ -105,7 +105,7 @@ impl<'a> Lexer<'a> {
 ```
 `fn offset` 내부에서 호출되는 `.len()`과 `.as_str().len()` 메서드는 O(n)처럼 느껴지므로 좀 더 자세히 살펴봅시다.
 
-[`.as_str()``](https://doc.rust-lang.org/src/core/str/iter.rs.html#112)은 문자열 슬라이스에 대한 포인터를 반환합니다.
+[`.as_str()`](https://doc.rust-lang.org/src/core/str/iter.rs.html#112)은 문자열 슬라이스에 대한 포인터를 반환합니다.
 
 
 ```rust reference
@@ -298,7 +298,7 @@ Token { kind: Kind::String, start: 0, end: 4, value: TokenValue::String("bar") }
 이를 Rust의 문자열로 변환하려면 `let s = self.source[token.start..token.end].to_string()`을 호출하여 `token.value = TokenValue::String(s)`로 저장합니다.
 
 숫자 `1.23`을 토큰화하면 `Token { start: 0, end: 3 }`이 토큰으로 반환됩니다.
-이를 Rust의 `f64`로 변환하려면 `self.source[`token.start..token.end].parse::<f64>()`를 호출하여 문자열의 [`parse``](https://doc.rust-lang.org/std/ primitive.str.html#method.parse) 메서드를 사용할 수 있으며, `token.value`에 값을 저장합니다.
+이를 Rust의 `f64`로 변환하려면 `self.source[`token.start..token.end].parse::<f64>()`를 호출하여 문자열의 [`parse`](https://doc.rust-lang.org/std/ primitive.str.html#method.parse) 메서드를 사용할 수 있으며, `token.value`에 값을 저장합니다.
 2진수, 8진수, 정수에 대해서는 [`jsparagus`](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/crates/parser/src/numeric_value.rs)에서 분석하는 기법의 예를 확인할 수 있습니다.
 
 ## Rust Optimizations
@@ -330,7 +330,7 @@ pub enum Kind {
 
 [`crates.io`](https://crates.io/search?q=string%20interning)에는 장단점이 다른 String Interning 라이브러리가 많이 있습니다.
 
-시작하기에 충분한 것으로는 [`string-cache``](https://crates.io/crates/string_cache)가 있는데, 이는 `Atom` 타입과 컴파일 시 `atom!("string")`의 인터페이스를 가집니다.
+시작하기에 충분한 것으로는 [`string-cache`](https://crates.io/crates/string_cache)가 있는데, 이는 `Atom` 타입과 컴파일 시 `atom!("string")`의 인터페이스를 가집니다.
 
 `string-cache`에서 `TokenValue`는 이렇게 됩니다,
 

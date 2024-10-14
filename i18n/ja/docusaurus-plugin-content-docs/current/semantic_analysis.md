@@ -61,7 +61,7 @@ Block : { StatementList }
 
 スコープツリーを追加する必要があります。スコープツリーには、その中で宣言されたすべての `var` と `let` が含まれます。
 また、親を指すツリーでもあり、親のスコープでバインディング識別子を検索するためにツリーを上に移動する必要があります。
-使用できるデータ構造は [`indextree``](https://docs.rs/indextree/latest/indextree/)です。
+使用できるデータ構造は [`indextree`](https://docs.rs/indextree/latest/indextree/)です。
 
 ```rust
 use indextree::{Arena, Node, NodeId};

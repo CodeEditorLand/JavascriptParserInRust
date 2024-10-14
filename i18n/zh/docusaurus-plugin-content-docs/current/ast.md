@@ -233,7 +233,7 @@ print-type-size         field `.0`: 8 bytes
 [`这篇博客文章`](https://manishearth.github.io/blog/2021/03/15/arenas-in-rust/) 更详细地解释了内存区域。
 :::
 
-根据其文档，[`bumpalo``](https://docs.rs/bumpalo/latest/bumpalo/) 是我们使用的一个非常好的选择：
+根据其文档，[`bumpalo`](https://docs.rs/bumpalo/latest/bumpalo/) 是我们使用的一个非常好的选择：
 
 > Bump 分配虽快，但有其局限。
 > 我们有一块内存，然后为这块内存维护一个指针。每当我们分配一个对象时，

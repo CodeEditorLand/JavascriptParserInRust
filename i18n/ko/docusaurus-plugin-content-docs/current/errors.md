@@ -96,7 +96,7 @@ pub enum SyntaxError {
 
 ECMAScript 사양의 문법 섹션에 정의된 모든 "early error"는 구문 오류이므로 이를 `SyntaxError`라고 부릅니다.
 
-이를 제대로 된 `Error`로 만들려면 [`Error` Trait](https://doc.rust-lang.org/std/error/trait.Error.html)를 구현해야 합니다. 더 깔끔한 코드를 위해 [`thiserror``](https://docs.rs/thiserror/latest/thiserror) crate에서 매크로를 사용할 수 있습니다:
+이를 제대로 된 `Error`로 만들려면 [`Error` Trait](https://doc.rust-lang.org/std/error/trait.Error.html)를 구현해야 합니다. 더 깔끔한 코드를 위해 [`thiserror`](https://docs.rs/thiserror/latest/thiserror) crate에서 매크로를 사용할 수 있습니다:
 
 ```rust
 #[derive(Debug, Error)]
@@ -142,7 +142,7 @@ fn parse_debugger_statement(&mut self) -> Result<Statement> {
 
 ### Fancy Error Report
 
-[`miette``](https://docs.rs/miette/latest/miette)는 가장 멋진 오류 보고 crete 중 하나입니다,
+[`miette`](https://docs.rs/miette/latest/miette)는 가장 멋진 오류 보고 crete 중 하나입니다,
 멋진 색상의 출력을 제공합니다.
 
 ![`miette`](https://raw.githubusercontent.com/zkat/miette/main/images/serde_json.png)

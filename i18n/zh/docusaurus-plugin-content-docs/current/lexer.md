@@ -41,7 +41,7 @@ pub enum Kind {
 
 为了遍历字符串，我们可以如同写 C 代码那样维护一个索引；
 又或者我们可以查看 [`str 的文档`](https://doc.rust-lang.org/std/primitive.str.html#)
-并使用 [`Chars``](https://doc.rust-lang.org/std/str/struct.Chars.html) 迭代器。
+并使用 [`Chars`](https://doc.rust-lang.org/std/str/struct.Chars.html) 迭代器。
 
 :::info
 `Chars` 迭代器抽象掉了索引的维护和边界检查等细节，让我们写代码的时候充满安全感。
@@ -108,7 +108,7 @@ impl<'a> Lexer<'a> {
 
 在 `fn offset` 中，`.len()` 和 `.as_str().len()` 方法看起来像是 O(n) 的，所以让我们进一步看看是否如此。
 
-[`.as_str()``](https://doc.rust-lang.org/src/core/str/iter.rs.html#112) 返回一个指向字符串切片的指针
+[`.as_str()`](https://doc.rust-lang.org/src/core/str/iter.rs.html#112) 返回一个指向字符串切片的指针
 
 ```rust reference
 https://github.com/rust-lang/rust/blob/b998821e4c51c44a9ebee395c91323c374236bbb/library/core/src/str/iter.rs#L112-L115
@@ -304,7 +304,7 @@ Token { kind: Kind::String, start: 0, end: 4, value: TokenValue::String("bar") }
 然后用 `token.value = TokenValue::String(s)` 保存它。
 
 当我们分词一个数字 `1.23` 时，我们得到一个类似 `Token { start: 0, end: 3 }` 的 token。
-要将它转换为 Rust 的 `f64`，我们可以使用字符串的 [`parse``](https://doc.rust-lang.org/std/primitive.str.html#method.parse) 方法，
+要将它转换为 Rust 的 `f64`，我们可以使用字符串的 [`parse`](https://doc.rust-lang.org/std/primitive.str.html#method.parse) 方法，
 通过调用 `self.source[token.start..token.end].parse::<f64>()`，然后将值保存到 `token.value` 中。
 对于二进制、八进制和整数，可以在 [`jsparagus`](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/crates/parser/src/numeric_value.rs) 中找到解析它们的方法。
 
@@ -337,7 +337,7 @@ pub enum Kind {
 
 在 [`crates.io`](https://crates.io/search?q=string%20interning) 上有许多 string interning 库，具有不同的优缺点。
 
-在最开始，我们使用[`string-cache``](https://crates.io/crates/string_cache)便已够用，它有一个 `Atom` 类型和一个编译时的 `atom!("string")` 接口。
+在最开始，我们使用[`string-cache`](https://crates.io/crates/string_cache)便已够用，它有一个 `Atom` 类型和一个编译时的 `atom!("string")` 接口。
 
 使用 `string-cache` 后，`TokenValue` 需改为：
 
