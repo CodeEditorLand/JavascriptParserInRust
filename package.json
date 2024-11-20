@@ -12,14 +12,14 @@
 		]
 	},
 	"dependencies": {
-		"@docusaurus/core": "3.6.1",
-		"@docusaurus/preset-classic": "3.6.1",
+		"@docusaurus/core": "3.6.2",
+		"@docusaurus/preset-classic": "3.6.2",
 		"@vegaprotocol/docusaurus-theme-github-codeblock": "0.1.8"
 	},
 	"devDependencies": {
-		"@docusaurus/module-type-aliases": "3.6.1",
-		"@docusaurus/tsconfig": "3.6.1",
-		"@docusaurus/types": "3.6.1",
+		"@docusaurus/module-type-aliases": "3.6.2",
+		"@docusaurus/tsconfig": "3.6.2",
+		"@docusaurus/types": "3.6.2",
 		"lint-staged": "15.2.10"
 	},
 	"lint-staged": {
