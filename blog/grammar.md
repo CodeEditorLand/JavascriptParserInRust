@@ -9,7 +9,7 @@ details all the sweat and tears I had while learning it.
 
 ## LL(1) Grammar
 
-According to [`Wikipedia`](https://en.wikipedia.org/wiki/LL_grammar),
+According to [`Wikipedia`](HTTPS://en.wikipedia.org/wiki/LL_grammar),
 
 > an LL grammar is a context-free grammar that can be parsed by an LL parser,
 > which parses the input from Left to right
@@ -28,12 +28,12 @@ Unfortunately, most industrial programming languages do not have a nice LL(1)
 grammar, and this applies to JavaScript too.
 
 :::info Mozilla started the
-[`jsparagus`](https://github.com/mozilla-spidermonkey/jsparagus) project a few
+[`jsparagus`](HTTPS://github.com/mozilla-spidermonkey/jsparagus) project a few
 years ago and wrote a
-[`LALR parser generator in Python`](https://github.com/mozilla-spidermonkey/jsparagus/tree/master/jsparagus).
+[`LALR parser generator in Python`](HTTPS://github.com/mozilla-spidermonkey/jsparagus/tree/master/jsparagus).
 They haven't updated it much in the past two years and they sent a strong
 message at the end of
-[`js-quirks.md`](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md)
+[`js-quirks.md`](HTTPS://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md)
 
 > What have we learned today?
 >
@@ -115,7 +115,7 @@ It is easy to declare strict mode by associating it with function scopes, but a
 for parsing classes.
 
 ```rust reference
-https://github.com/swc-project/swc/blob/f9c4eff94a133fa497778328fa0734aa22d5697c/crates/swc_ecma_parser/src/parser/class_and_fn.rs#L85
+HTTPS://github.com/swc-project/swc/blob/f9c4eff94a133fa497778328fa0734aa22d5697c/crates/swc_ecma_parser/src/parser/class_and_fn.rs#L85
 ```
 
 ---
@@ -139,7 +139,7 @@ strict mode state and throw errors accordingly.
 But, this becomes impossible when mixed with directives:
 
 ```javascript reference
-https://github.com/tc39/test262/blob/747bed2e8aaafe8fdf2c65e8a10dd7ae64f66c47/test/language/literals/string/legacy-octal-escape-sequence-prologue-strict.js#L16-L19
+HTTPS://github.com/tc39/test262/blob/747bed2e8aaafe8fdf2c65e8a10dd7ae64f66c47/test/language/literals/string/legacy-octal-escape-sequence-prologue-strict.js#L16-L19
 ```
 
 `use strict` is declared after the escaped legacy octal, yet the syntax error
@@ -180,7 +180,7 @@ Chrome throws this error with a mysterious message "Uncaught SyntaxError:
 Illegal 'use strict' directive in function with non-simple parameter list".
 
 A more in-depth explanation is described in
-[`this blog post`](https://humanwhocodes.com/blog/2016/10/the-ecmascript-2016-change-you-probably-dont-know/)
+[`this blog post`](HTTPS://humanwhocodes.com/blog/2016/10/the-ecmascript-2016-change-you-probably-dont-know/)
 by the author of ESLint.
 
 :::info
@@ -207,7 +207,7 @@ instance the AST for `((x))` can just be a single `IdentifierReference`, not
 And this is the case for JavaScript grammar.
 
 But ... who would have thought it can have run-time meanings. Found in
-[`this estree issue`](https://github.com/estree/estree/issues/194), it shows that
+[`this estree issue`](HTTPS://github.com/estree/estree/issues/194), it shows that
 
 ```javascript
 > fn = function () {};
@@ -330,7 +330,7 @@ entire page is dedicated to explain how `FunctionDeclaration` is supposed to
 behave in `Block` statements. It boils down to
 
 ```javascript reference
-https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/scope.js#L30-L35
+HTTPS://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/scope.js#L30-L35
 ```
 
 The name of a `FunctionDeclaration` needs to be treated the same as a `var`
@@ -367,7 +367,7 @@ certain constructs, namely `[In]`, `[Return]`, `[Yield]`, `[Await]` and
 It is best to keep a context during parsing, for example in Rome:
 
 ```rust reference
-https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/state.rs#L404-L425
+HTTPS://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/state.rs#L404-L425
 ```
 
 And toggle and check these flags accordingly by following the grammar.
@@ -614,7 +614,7 @@ where a RegularExpressionLiteral is permitted".
 
 ## Cover Grammar
 
-Read the [`V8 blog post`](https://v8.dev/blog/understanding-ecmascript-part-4) on
+Read the [`V8 blog post`](HTTPS://v8.dev/blog/understanding-ecmascript-part-4) on
 this topic first.
 
 To summarize, the specification states the following three cover grammars:
@@ -658,11 +658,11 @@ to a `BindingPattern`.
 It should be noted that, if we are building the scope tree within the parser,
 i.e. create the scope for arrow expression during parsing, but do not create one
 for a sequence expression, it is not obvious how to do this.
-[`esbuild`](https://github.com/evanw/esbuild) solved this problem by creating a
+[`esbuild`](HTTPS://github.com/evanw/esbuild) solved this problem by creating a
 temporary scope first, and then dropping it if it is not an `ArrowExpression`.
 
 This is stated in its
-[`architecture document`](https://github.com/evanw/esbuild/blob/master/docs/architecture.md#symbols-and-scopes):
+[`architecture document`](HTTPS://github.com/evanw/esbuild/blob/master/docs/architecture.md#symbols-and-scopes):
 
 > This is mostly pretty straightforward except for a few places where the parser
 > has pushed a scope and is in the middle of parsing a declaration only to

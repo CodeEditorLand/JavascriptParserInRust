@@ -44,7 +44,7 @@ AsyncGeneratorBody :
 在Rome中检查`yield`关键字的示例：
 
 ```rust reference
-https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/syntax/expr.rs#L1368-L1377
+HTTPS://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/syntax/expr.rs#L1368-L1377
 ```
 
 ## 作用域
@@ -61,7 +61,7 @@ Block : { StatementList }
 
 我们需要添加一个作用域树 (scope tree)。作用域树包含在其中声明的所有`var`和`let`。
 这棵树的节点有指向父级节点的指针，我们希望以此在树上向上移动并在父级作用域之中搜索绑定标识符。
-我们可以使用[`indextree`](https://docs.rs/indextree/latest/indextree/)作为数据结构。
+我们可以使用[`indextree`](HTTPS://docs.rs/indextree/latest/indextree/)作为数据结构。
 
 ```rust
 use indextree::{Arena, Node, NodeId};
@@ -83,16 +83,16 @@ bitflags! {
 
 #[derive(Debug, Clone)]
 pub struct Scope {
-    /// [`Strict Mode Code`](https://tc39.es/ecma262/#sec-strict-mode-code)
-    /// [`Use Strict Directive Prologue`](https://tc39.es/ecma262/#sec-directive-prologues-and-the-use-strict-directive)
+    /// [`Strict Mode Code`](HTTPS://tc39.es/ecma262/#sec-strict-mode-code)
+    /// [`Use Strict Directive Prologue`](HTTPS://tc39.es/ecma262/#sec-directive-prologues-and-the-use-strict-directive)
     pub strict_mode: bool,
 
     pub flags: ScopeFlags,
 
-    /// [`Lexically Declared Names`](https://tc39.es/ecma262/#sec-static-semantics-lexicallydeclarednames)
+    /// [`Lexically Declared Names`](HTTPS://tc39.es/ecma262/#sec-static-semantics-lexicallydeclarednames)
     pub lexical: IndexMap<Atom, SymbolId, FxBuildHasher>,
 
-    /// [`Var Declared Names`](https://tc39.es/ecma262/#sec-static-semantics-vardeclarednames)
+    /// [`Var Declared Names`](HTTPS://tc39.es/ecma262/#sec-static-semantics-vardeclarednames)
     pub var: IndexMap<Atom, SymbolId, FxBuildHasher>,
 
     /// Function Declarations
@@ -118,7 +118,7 @@ impl ScopeBuilder {
 
     pub fn enter_scope(&mut self, flags: ScopeFlags) {
         // 继承一下函数的严格模式
-        // https://tc39.es/ecma262/#sec-strict-mode-code
+        // HTTPS://tc39.es/ecma262/#sec-strict-mode-code
         let mut strict_mode = self.scopes[self.root_scope_id].get().strict_mode;
         let parent_scope = self.current_scope();
         if !strict_mode
@@ -143,7 +143,7 @@ impl ScopeBuilder {
 然后在解析函数中相应地调用`enter_scope`和`leave_scope`，例如在acorn中：
 
 ```javascript reference
-https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/statement.js#L425-L437
+HTTPS://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/statement.js#L425-L437
 ```
 
 :::info
@@ -156,6 +156,6 @@ https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/a
 如果我们选择在一个单独的遍历中构建作用域树以追求简单，
 那么需要按照深度优先的前序 (preorder)来访问AST中的每个节点并构建作用域树。
 
-我们可以使用[`访问者模式`](https://rust-unofficial.github.io/patterns/patterns/behavioural/visitor.html)将遍历过程与对每个对象执行的操作分离开来。
+我们可以使用[`访问者模式`](HTTPS://rust-unofficial.github.io/patterns/patterns/behavioural/visitor.html)将遍历过程与对每个对象执行的操作分离开来。
 
 在访问时，我们可以相应地调用`enter_scope`和`leave_scope`来构建作用域树。

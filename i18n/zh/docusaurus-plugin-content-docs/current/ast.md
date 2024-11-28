@@ -16,7 +16,7 @@ title: 抽象语法树 (Abstract Syntax Tree)
 
 ## 熟悉AST
 
-为了让我们对AST更加熟悉，让我们访问[`ASTExplorer`](https://astexplorer.net/)并看看它是什么样子的。
+为了让我们对AST更加熟悉，让我们访问[`ASTExplorer`](HTTPS://astexplorer.net/)并看看它是什么样子的。
 
 在顶部面板上选择JavaScript，然后选择`acorn`，输入`var a`，我们将看到一个树形视图和一个JSON视图。
 
@@ -56,8 +56,8 @@ title: 抽象语法树 (Abstract Syntax Tree)
 
 ## estree
 
-[`estree`](https://github.com/estree/estree)是JavaScript的一个社区标准语法规范，
-它定义了[`所有的AST节点`](https://github.com/estree/estree/blob/master/es5.md)，以便不同的工具可以彼此兼容。
+[`estree`](HTTPS://github.com/estree/estree)是JavaScript的一个社区标准语法规范，
+它定义了[`所有的AST节点`](HTTPS://github.com/estree/estree/blob/master/es5.md)，以便不同的工具可以彼此兼容。
 
 `Node`类型是所有AST节点的基础：
 
@@ -143,7 +143,7 @@ JavaScript语法有很多细微而玄妙之处，请阅读[`语法教程`](/blog
 
 在[`概述`](./overview.md)章节中提到，我们需要额外注意分配在堆上的结构体，如`Vec`和`Box`。这是因为堆分配并不廉价。
 
-看一下[`来自 swc 项目的真实实现`](https://github.com/swc-project/swc/blob/main/crates/swc_ecma_ast/src/expr.rs)，我们可以看到AST可能有很多`Box`和`Vec`，还要注意`Statement`和`Expression`枚举包含很多枚举变体。
+看一下[`来自 swc 项目的真实实现`](HTTPS://github.com/swc-project/swc/blob/main/crates/swc_ecma_ast/src/expr.rs)，我们可以看到AST可能有很多`Box`和`Vec`，还要注意`Statement`和`Expression`枚举包含很多枚举变体。
 
 ### 枚举大小
 
@@ -160,7 +160,7 @@ enum Name {
 ```
 
 :::note
-此示例摘自[`此博文`](https://adeschamps.github.io/enum-size)
+此示例摘自[`此博文`](HTTPS://adeschamps.github.io/enum-size)
 :::
 
 至于`Expression`和`Statement`枚举，目前看来它们可能占用超过200字节。
@@ -200,7 +200,7 @@ fn no_bloat_enum_sizes() {
 "无膨胀的枚举大小 (no bloat enum sizes)" 测试用例经常出现在Rust编译器源代码中，用于确保枚举足够小。
 
 ```rust reference
-https://github.com/rust-lang/rust/blob/9c20b2a8cc7588decb6de25ac6a7912dcef24d65/compiler/rustc_ast/src/ast.rs#L3033-L3042
+HTTPS://github.com/rust-lang/rust/blob/9c20b2a8cc7588decb6de25ac6a7912dcef24d65/compiler/rustc_ast/src/ast.rs#L3033-L3042
 ```
 
 要找到其他比较大的类型，我们可以运行
@@ -230,10 +230,10 @@ print-type-size         field `.0`: 8 bytes
 我们希望做的是预先分配内存然后一次性 drop。
 
 :::info
-[`这篇博客文章`](https://manishearth.github.io/blog/2021/03/15/arenas-in-rust/) 更详细地解释了内存区域。
+[`这篇博客文章`](HTTPS://manishearth.github.io/blog/2021/03/15/arenas-in-rust/) 更详细地解释了内存区域。
 :::
 
-根据其文档，[`bumpalo`](https://docs.rs/bumpalo/latest/bumpalo/) 是我们使用的一个非常好的选择：
+根据其文档，[`bumpalo`](HTTPS://docs.rs/bumpalo/latest/bumpalo/) 是我们使用的一个非常好的选择：
 
 > Bump 分配虽快，但有其局限。
 > 我们有一块内存，然后为这块内存维护一个指针。每当我们分配一个对象时，
@@ -274,7 +274,7 @@ pub struct YieldExpression<'a> {
 
 ## JSON 序列化
 
-[`serde`](https://serde.rs/) 可以用于将 AST 序列化为 JSON。我们需要一些额外技巧使其与 `estree` 兼容。
+[`serde`](HTTPS://serde.rs/) 可以用于将 AST 序列化为 JSON。我们需要一些额外技巧使其与 `estree` 兼容。
 以下是一些示例：
 
 ```rust

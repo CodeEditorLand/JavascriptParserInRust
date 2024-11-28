@@ -30,7 +30,7 @@ Rust のゼロコスト抽象化のおかげで、抽象化によってパフォ
 アルゴリズムの複雑性に注意すれば問題はないでしょう。
 
 :::info
-[`The Rust Performance Book`](https://nnethercote.github.io/perf-book/introduction.html)も読むと良いでしょう。
+[`The Rust Performance Book`](HTTPS://nnethercote.github.io/perf-book/introduction.html)も読むと良いでしょう。
 :::
 
 ## Rust のソースコード

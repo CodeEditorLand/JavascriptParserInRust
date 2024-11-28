@@ -2,7 +2,7 @@
 title: ECMAScript 사양서
 ---
 
-[`The ECMAScript® 2023 Language Specification`](https://tc39.es/ecma262/)는
+[`The ECMAScript® 2023 Language Specification`](HTTPS://tc39.es/ecma262/)는
 자바스크립트에 대한 모든 것을 자세히 설명하므로 누구나 자바스크립트를 구현할 수
 있습니다.
 
@@ -29,7 +29,7 @@ to be studied for our parser:
 
 ## Notational Conventions(표기법 규칙)
 
-[`Chapter 5.1.5 Grammar Notation`](https://tc39.es/ecma262/#sec-grammar-notation)
+[`Chapter 5.1.5 Grammar Notation`](HTTPS://tc39.es/ecma262/#sec-grammar-notation)
 우리가 읽을 섹션입니다.
 
 여기서 유이해야할 것은 이렇습니다:
@@ -96,7 +96,7 @@ top-level await은 허용 됨.
 
 ## 소스 텍스트
 
-[`Chapter 11.2 Types of Source Code`](https://tc39.es/ecma262/#sec-types-of-source-code)
+[`Chapter 11.2 Types of Source Code`](HTTPS://tc39.es/ecma262/#sec-types-of-source-code)
 에서는 이런 설명이 있습니다. 스크립트 코드와 모듈 코드 사이에는 큰 차이가 있다.
 그리고 오래된 자바스크립트 동작을 허용하지 않음으로 문법을 더욱 엄격히 만드는
 `use strict`이 있다.
@@ -111,10 +111,10 @@ top-level await은 허용 됨.
 ## ECMAScript Language: Lexical Grammar(어휘 문법)
 
 상세한 사양은 V8 블로그
-[`Understanding the ECMAScript spec`](https://v8.dev/blog/understanding-ecmascript-part-3)
+[`Understanding the ECMAScript spec`](HTTPS://v8.dev/blog/understanding-ecmascript-part-3)
 참조해주세요.
 
-### [`Automatic Semicolon Insertion`](https://tc39.es/ecma262/#sec-automatic-semicolon-insertion)
+### [`Automatic Semicolon Insertion`](HTTPS://tc39.es/ecma262/#sec-automatic-semicolon-insertion)
 
 이 섹션에서는 자바스크립트 작성할 때 세미콜론을 생략할 수 있는 모든 규칙에 대해
 설명합니다. 모든 설명은 이하와 같이 요약됩니다.
@@ -150,7 +150,7 @@ top-level await은 허용 됨.
 asi 섹션은 파서를 염두해 작성되었습니다. 소스 텍스트가 왼쪽에서 오른쪽으로 구문
 분석된다 명시되어 있으며, 따라서 다른 방식으로 파서를 작성하지 않습니다.
 jsparagus는 이에 대해
-[`언급`](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md#automatic-semicolon-insertion-)했습니다.
+[`언급`](HTTPS://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md#automatic-semicolon-insertion-)했습니다.
 
 > 이 기능에 대한 사양은 매우 매우 높은 레벨이면서 괴상하게도 절차적입니다("소스
 > 텍스트가 왼쪽에서 오른쪽으로 구문 분석될 때 토큰이 발생하면...", 마치 브라우저

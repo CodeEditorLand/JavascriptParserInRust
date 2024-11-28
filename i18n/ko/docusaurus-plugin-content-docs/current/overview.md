@@ -30,7 +30,7 @@ Rust의 제로 코스트 추상화 덕분에 추상화로 인한 성능 저하�
 알고리즘의 복잡성만 주의하면 문제가 없죠.
 
 :::info
-[`The Rust Performance Book`](https://nnethercote.github.io/perf-book/introduction.html)를 읽어보시면 좋을 듯 합니다.
+[`The Rust Performance Book`](HTTPS://nnethercote.github.io/perf-book/introduction.html)를 읽어보시면 좋을 듯 합니다.
 :::
 
 ## Rust Source Code

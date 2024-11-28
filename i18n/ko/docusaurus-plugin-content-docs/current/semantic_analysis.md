@@ -44,7 +44,7 @@ AsyncGeneratorBody :
 Rome에서 `yield` 키워드를 확인하는 예제입니다:
 
 ```rust reference
-https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/syntax/expr.rs#L1368-L1377
+HTTPS://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/syntax/expr.rs#L1368-L1377
 ```
 
 ## Scope
@@ -61,7 +61,7 @@ Block : { StatementList }
 
 스코프 트리를 추가해야 합니다. 스코프 트리는 그 안에 선언된 모든 `var`와 `let`을 포함합니다.
 또한 트리를 탐색하고 상위 스코프에서 바인딩 식별자를 검색하려는 상위 포인팅 트리이기도 합니다.
-우리가 사용할 수 있는 데이터 구조는 [`indextree`](https://docs.rs/indextree/latest/indextree/)입니다.
+우리가 사용할 수 있는 데이터 구조는 [`indextree`](HTTPS://docs.rs/indextree/latest/indextree/)입니다.
 
 ```rust
 use indextree::{Arena, Node, NodeId};
@@ -83,16 +83,16 @@ bitflags! {
 
 #[derive(Debug, Clone)]
 pub struct Scope {
-    /// [`Strict Mode Code`](https://tc39.es/ecma262/#sec-strict-mode-code)
-    /// [`Use Strict Directive Prologue`](https://tc39.es/ecma262/#sec-directive-prologues-and-the-use-strict-directive)
+    /// [`Strict Mode Code`](HTTPS://tc39.es/ecma262/#sec-strict-mode-code)
+    /// [`Use Strict Directive Prologue`](HTTPS://tc39.es/ecma262/#sec-directive-prologues-and-the-use-strict-directive)
     pub strict_mode: bool,
 
     pub flags: ScopeFlags,
 
-    /// [`Lexically Declared Names`](https://tc39.es/ecma262/#sec-static-semantics-lexicallydeclarednames)
+    /// [`Lexically Declared Names`](HTTPS://tc39.es/ecma262/#sec-static-semantics-lexicallydeclarednames)
     pub lexical: IndexMap<Atom, SymbolId, FxBuildHasher>,
 
-    /// [`Var Declared Names`](https://tc39.es/ecma262/#sec-static-semantics-vardeclarednames)
+    /// [`Var Declared Names`](HTTPS://tc39.es/ecma262/#sec-static-semantics-vardeclarednames)
     pub var: IndexMap<Atom, SymbolId, FxBuildHasher>,
 
     /// Function Declarations
@@ -118,7 +118,7 @@ impl ScopeBuilder {
 
     pub fn enter_scope(&mut self, flags: ScopeFlags) {
         // Inherit strict mode for functions
-        // https://tc39.es/ecma262/#sec-strict-mode-code
+        // HTTPS://tc39.es/ecma262/#sec-strict-mode-code
         let mut strict_mode = self.scopes[self.root_scope_id].get().strict_mode;
         let parent_scope = self.current_scope();
         if !strict_mode
@@ -143,7 +143,7 @@ impl ScopeBuilder {
 그런 다음, 예를 들어 acorn에서와 같이 파싱 함수 내에서 `enter_scope`와 `leave_scope`를 적절히 호출합니다:
 
 ```javascript reference
-https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/statement.js#L425-L437
+HTTPS://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/statement.js#L425-L437
 ```
 
 :::info
@@ -156,6 +156,6 @@ https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/a
 
 간소화를 위해 다른 패스에서 스코프 트리를 빌드하기로 결정한 경우, AST의 모든 노드를 깊이 우선 선순위로 방문하고 스코프 트리를 빌드해야 합니다.
 
-[`Visitor Pattern`](https://rust-unofficial.github.io/patterns/patterns/behavioural/visitor.html)을 사용하여 각 객체에서 수행되는 작업에서 traversal process를 분리할 수 있습니다.
+[`Visitor Pattern`](HTTPS://rust-unofficial.github.io/patterns/patterns/behavioural/visitor.html)을 사용하여 각 객체에서 수행되는 작업에서 traversal process를 분리할 수 있습니다.
 
 방문 시 `enter_scope`와 `leave_scope`를 적절히 호출하여 스코프 트리를 구축할 수 있습니다.

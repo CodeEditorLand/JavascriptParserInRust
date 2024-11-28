@@ -3,7 +3,7 @@ id: typescript
 title: TypeScript
 ---
 
-所以你已经完成了JavaScript，现在想要挑战解析TypeScript了？坏消息是没有规范，但好消息是TypeScript解析器在[`一个单一文件`](https://github.com/microsoft/TypeScript/blob/main/src/compiler/parser.ts)中 🙃。
+所以你已经完成了JavaScript，现在想要挑战解析TypeScript了？坏消息是没有规范，但好消息是TypeScript解析器在[`一个单一文件`](HTTPS://github.com/microsoft/TypeScript/blob/main/src/compiler/parser.ts)中 🙃。
 
 ## JSX vs TSX
 

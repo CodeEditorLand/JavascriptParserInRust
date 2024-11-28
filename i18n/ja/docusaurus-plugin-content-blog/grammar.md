@@ -7,7 +7,7 @@ JavaScript の文法は解析が非常に困難なものの一つであり、こ
 
 ## LL(1)文法
 
-[`Wikipedia`](https://en.wikipedia.org/wiki/LL_grammar) によると、
+[`Wikipedia`](HTTPS://en.wikipedia.org/wiki/LL_grammar) によると、
 
 > an LL grammar is a context-free grammar that can be parsed by an LL parser,
 > which parses the input from Left to right
@@ -26,11 +26,11 @@ LL 文法は、私たちが怠惰な人間であり、パーサを手動で書�
 ません。JavaScript もその例外ではありません。
 
 :::info Mozillaは数年前に
-[`jsparagus`](https://github.com/mozilla-spidermonkey/jsparagus) プロジェクトを開
+[`jsparagus`](HTTPS://github.com/mozilla-spidermonkey/jsparagus) プロジェクトを開
 始し、
-[`Python で LALR パーサジェネレータ`](https://github.com/mozilla-spidermonkey/jsparagus/tree/master/jsparagus)
+[`Python で LALR パーサジェネレータ`](HTTPS://github.com/mozilla-spidermonkey/jsparagus/tree/master/jsparagus)
 を作成しました。彼らは過去2年間ほとんど更新しておら
-ず、[`js-quirks.md`](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md)
+ず、[`js-quirks.md`](HTTPS://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md)
 の最後に強いメッセージを送っています。
 
 > What have we learned today?
@@ -110,7 +110,7 @@ ECMAScript のクラスは、Strict モードの後に生まれたため、ク�
 す。
 
 ```rust reference
-https://github.com/swc-project/swc/blob/f9c4eff94a133fa497778328fa0734aa22d5697c/crates/swc_ecma_parser/src/parser/class_and_fn.rs#L85
+HTTPS://github.com/swc-project/swc/blob/f9c4eff94a133fa497778328fa0734aa22d5697c/crates/swc_ecma_parser/src/parser/class_and_fn.rs#L85
 ```
 
 ---
@@ -134,7 +134,7 @@ EscapeSequence ::
 しかし、これはディレクティブと混在した場合には不可能になります。
 
 ```javascript reference
-https://github.com/tc39/test262/blob/747bed2e8aaafe8fdf2c65e8a10dd7ae64f66c47/test/language/literals/string/legacy-octal-escape-sequence-prologue-strict.js#L16-L19
+HTTPS://github.com/tc39/test262/blob/747bed2e8aaafe8fdf2c65e8a10dd7ae64f66c47/test/language/literals/string/legacy-octal-escape-sequence-prologue-strict.js#L16-L19
 ```
 
 `use strict` はエスケープされたレガシーオクタルの後に宣言されていますが、構文エ
@@ -178,7 +178,7 @@ directive in function with non-simple parameter list」というエラーをス�
 す。
 
 詳細な説明は、ESLint の作者による
-[`このブログ記事`](https://humanwhocodes.com/blog/2016/10/the-ecmascript-2016-change-you-probably-dont-know/)
+[`このブログ記事`](HTTPS://humanwhocodes.com/blog/2016/10/the-ecmascript-2016-change-you-probably-dont-know/)
 に記載されています。
 
 :::info
@@ -205,7 +205,7 @@ ParenthesizedExpression (パレン式)には意味がないはずですか？例
 す。そして、これは JavaScript の文法の場合です。
 
 しかし...誰が実行時の意味を持つことができると思ったでしょうか。
-[`この estree の問題`](https://github.com/estree/estree/issues/194)で見つかったよ
+[`この estree の問題`](HTTPS://github.com/estree/estree/issues/194)で見つかったよ
 うに、
 
 ```javascript
@@ -326,7 +326,7 @@ Annex B.3.2
 ページが割かれています。要点は次のとおりです。
 
 ```javascript reference
-https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/scope.js#L30-L35
+HTTPS://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/scope.js#L30-L35
 ```
 
 `FunctionDeclaration` の名前は、関数宣言内にある場合には `var` 宣言と同じように
@@ -364,7 +364,7 @@ function foo() {
 す。
 
 ```rust reference
-https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/state.rs#L404-L425
+HTTPS://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/state.rs#L404-L425
 ```
 
 そして、文法に従ってこれらのフラグを切り替えて確認することが重要です。
@@ -607,7 +607,7 @@ InputElementRegExp ゴール記号が使用される」と述べているから�
 ## Cover Grammar
 
 まず、このトピックに関する
-[`V8のブログ記事`](https://v8.dev/blog/understanding-ecmascript-part-4) を読んでく
+[`V8のブログ記事`](HTTPS://v8.dev/blog/understanding-ecmascript-part-4) を読んでく
 ださい。
 
 要約すると、仕様は次の3つの Cover Grammar を述べています：
@@ -648,11 +648,11 @@ let bar = (a, b, c) => {}; // ArrowExpression
 なお、もしパーサー内でスコープツリーを構築している場合、つまり、パーサー内でア
 ロー式のスコープを作成しているが、シーケンス式のスコープは作成していない場合、こ
 れをどのように行うかは明らかではありませ
-ん。[`esbuild`](https://github.com/evanw/esbuild) は、一時的なスコープを作成し、そ
+ん。[`esbuild`](HTTPS://github.com/evanw/esbuild) は、一時的なスコープを作成し、そ
 れが `ArrowExpression` でない場合には削除することで、この問題を解決しています。
 
 これは、その
-[`アーキテクチャドキュメント`](https://github.com/evanw/esbuild/blob/master/docs/architecture.md#symbols-and-scopes)
+[`アーキテクチャドキュメント`](HTTPS://github.com/evanw/esbuild/blob/master/docs/architecture.md#symbols-and-scopes)
 に記載されています:
 
 > This is mostly pretty straightforward except for a few places where the parser

@@ -3,7 +3,7 @@ id: errors
 title: エラー処理
 ---
 
-[`Dragon Book`](https://www.amazon.com/Compilers-Principles-Techniques-Tools-2nd/dp/0321486811) から引用します。
+[`Dragon Book`](HTTPS://www.amazon.com/Compilers-Principles-Techniques-Tools-2nd/dp/0321486811) から引用します。
 
 > Most programming language specifications do not describe how a compiler should respond to errors; error handling is left to the compiler designer. Planning the error handling right from the start can both simplify the structure of a compiler and improve its handling of errors.
 
@@ -18,7 +18,7 @@ title: エラー処理
 ほとんどの JavaScript パーサーは部分的に回復可能ですので、同じように部分的に回復可能なパーサーを構築します。
 
 :::info
-[`Rome`](https://github.com/rome/tools) パーサーは完全に回復可能なパーサーです。
+[`Rome`](HTTPS://github.com/rome/tools) パーサーは完全に回復可能なパーサーです。
 :::
 
 Rustにはエラーを返して伝播させるための `Result` 型があります。
@@ -93,7 +93,7 @@ pub enum SyntaxError {
 
 これを `SyntaxError` と呼びます。なぜなら、ECMAScript 仕様の文法セクションで定義されているすべての「早期エラー」は構文エラーだからです。
 
-これを正しい `Error` にするためには、[`Error` トレイト](https://doc.rust-lang.org/std/error/trait.Error.html)を実装する必要があります。よりクリーンなコードのために、[`thiserror`](https://docs.rs/thiserror/latest/thiserror) クレートのマクロを使用できます。
+これを正しい `Error` にするためには、[`Error` トレイト](HTTPS://doc.rust-lang.org/std/error/trait.Error.html)を実装する必要があります。よりクリーンなコードのために、[`thiserror`](HTTPS://docs.rs/thiserror/latest/thiserror) クレートのマクロを使用できます。
 
 ```rust
 #[derive(Debug, Error)]
@@ -139,10 +139,10 @@ fn parse_debugger_statement(&mut self) -> Result<Statement> {
 
 ### Fancy Error Report
 
-[`miette`](https://docs.rs/miette/latest/miette) は最も素敵なエラーレポートクレートの 1 つであり、
+[`miette`](HTTPS://docs.rs/miette/latest/miette) は最も素敵なエラーレポートクレートの 1 つであり、
 視覚的に洗練された出力を提供します。
 
-![`miette`](https://raw.githubusercontent.com/zkat/miette/main/images/serde_json.png)
+![`miette`](HTTPS://raw.githubusercontent.com/zkat/miette/main/images/serde_json.png)
 
 `Cargo.toml` に `miette` を追加します。
 

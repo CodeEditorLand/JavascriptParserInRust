@@ -17,7 +17,7 @@ title: 抽象構文木 (AST)
 
 ## ASTに慣れる
 
-AST に慣れるために、[`ASTExplorer`](https://astexplorer.net/) を訪れてどのようなものか見てみましょう。
+AST に慣れるために、[`ASTExplorer`](HTTPS://astexplorer.net/) を訪れてどのようなものか見てみましょう。
 上部パネルで JavaScript を選択し、次に `acorn` を入力して、ツリービューと JSON ビューが表示されます。
 
 ```json
@@ -56,8 +56,8 @@ AST に慣れるために、[`ASTExplorer`](https://astexplorer.net/) を訪れ�
 
 ## estree
 
-[`estree`](https://github.com/estree/estree) は、JavaScript のためのコミュニティ標準の文法仕様です。
-これにより、さまざまなツールが互換性を持つことができるように、[`すべてのASTノード`](https://github.com/estree/estree/blob/master/es5.md) が定義されています。
+[`estree`](HTTPS://github.com/estree/estree) は、JavaScript のためのコミュニティ標準の文法仕様です。
+これにより、さまざまなツールが互換性を持つことができるように、[`すべてのASTノード`](HTTPS://github.com/estree/estree/blob/master/es5.md) が定義されています。
 
 任意のASTノードの基本的な構築要素は、`Node` 型です。
 
@@ -143,7 +143,7 @@ JavaScriptの文法には多くの面倒な点があります。興味深いの�
 
 [`概要`](./overview.md) の章で、ヒープに割り当てられた `Vec` や `Box` などの構造体に注意が必要であることを簡単に述べました。なぜなら、ヒープの割り当ては安価ではないからです。
 
-[`swc`](https://github.com/swc-project/swc/blob/main/crates/swc_ecma_ast/src/expr.rs) の実装を見てみると、ASTには多くの `Box` や `Vec` が含まれていることがわかります。また、`Statement` と `Expression` の列挙型には多数の列挙子が含まれていることにも注意してください。
+[`swc`](HTTPS://github.com/swc-project/swc/blob/main/crates/swc_ecma_ast/src/expr.rs) の実装を見てみると、ASTには多くの `Box` や `Vec` が含まれていることがわかります。また、`Statement` と `Expression` の列挙型には多数の列挙子が含まれていることにも注意してください。
 
 ### 列挙型のサイズ
 
@@ -160,7 +160,7 @@ enum Name {
 ```
 
 :::note
-この例は、[`このブログ記事`](https://adeschamps.github.io/enum-size) から取られています。
+この例は、[`このブログ記事`](HTTPS://adeschamps.github.io/enum-size) から取られています。
 :::
 
 `Expression` と `Statement` の列挙型は、現在の設定では200バイト以上を占めることがあります。
@@ -200,7 +200,7 @@ fn no_bloat_enum_sizes() {
 「no bloat enum sizes」というテストケースは、小さな列挙型サイズを確保するためにRustコンパイラのソースコードでよく見られます。
 
 ```rust reference
-https://github.com/rust-lang/rust/blob/9c20b2a8cc7588decb6de25ac6a7912dcef24d65/compiler/rustc_ast/src/ast.rs#L3033-L3042
+HTTPS://github.com/rust-lang/rust/blob/9c20b2a8cc7588decb6de25ac6a7912dcef24d65/compiler/rustc_ast/src/ast.rs#L3033-L3042
 ```
 
 他の大きな型を見つけるためには、次のコマンドを実行します。
@@ -229,10 +229,10 @@ print-type-size         field `.0`: 8 bytes
 ASTに対してグローバルメモリアロケータを使用するのは実際には非効率です。すべての `Box` と `Vec` は要求に応じて個別に割り当てられ、個別に解放されます。私たちがしたいことは、メモリを事前に割り当てて一括で解放することです。
 
 :::info
-[`このブログ記事`](https://manishearth.github.io/blog/2021/03/15/arenas-in-rust/)では、メモリアリーナについて詳しく説明しています。
+[`このブログ記事`](HTTPS://manishearth.github.io/blog/2021/03/15/arenas-in-rust/)では、メモリアリーナについて詳しく説明しています。
 :::
 
-[`bumpalo`](https://docs.rs/bumpalo/latest/bumpalo/) は、私たちのユースケースに非常に適しているとされています。ドキュメントによれば：
+[`bumpalo`](HTTPS://docs.rs/bumpalo/latest/bumpalo/) は、私たちのユースケースに非常に適しているとされています。ドキュメントによれば：
 
 > バンプアロケーションは、高速ですが制限されたアロケーション手法です。メモリのチャンクを持ち、そのメモリ内のポインタを維持します。オブジェクトを割り当てるたびに、チャンクに十分な容量が残っているかを素早くチェックし、オブジェクトのサイズによってポインタを更新します。それだけです！
 >
@@ -270,7 +270,7 @@ pub struct YieldExpression<'a> {
 
 ## JSONシリアライゼーション
 
-[`serde`](https://serde.rs/) を使用してASTをJSONにシリアライズすることができます。`estree` と互換性を持たせるためにはいくつかのテクニックが必要です。以下にいくつかの例を示します。
+[`serde`](HTTPS://serde.rs/) を使用してASTをJSONにシリアライズすることができます。`estree` と互換性を持たせるためにはいくつかのテクニックが必要です。以下にいくつかの例を示します。
 
 ```rust
 use serde::Serialize;

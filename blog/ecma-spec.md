@@ -2,7 +2,7 @@
 title: The ECMAScript Specification
 ---
 
-[`The ECMAScript® 2023 Language Specification`](https://tc39.es/ecma262/) details
+[`The ECMAScript® 2023 Language Specification`](HTTPS://tc39.es/ecma262/) details
 everything about the JavaScript language, so anyone can implement their own
 JavaScript engine.
 
@@ -27,7 +27,7 @@ For navigation inside the specification:
 
 ## Notational Conventions
 
-[`Chapter 5.1.5 Grammar Notation`](https://tc39.es/ecma262/#sec-grammar-notation)
+[`Chapter 5.1.5 Grammar Notation`](HTTPS://tc39.es/ecma262/#sec-grammar-notation)
 is the section we need to read.
 
 The things to note here are:
@@ -92,7 +92,7 @@ allows for top-level await.
 
 ## Source Text
 
-[`Chapter 11.2 Types of Source Code`](https://tc39.es/ecma262/#sec-types-of-source-code)
+[`Chapter 11.2 Types of Source Code`](HTTPS://tc39.es/ecma262/#sec-types-of-source-code)
 tells us that there is a huge distinction between script code and module code.
 And there is a `use strict` mode that makes the grammar saner by disallowing old
 JavaScript behaviors.
@@ -107,9 +107,9 @@ the file to make script code strict. In html we write
 ## ECMAScript Language: Lexical Grammar
 
 For more in-depth explanation, read the V8 blog on
-[`Understanding the ECMAScript spec`](https://v8.dev/blog/understanding-ecmascript-part-3).
+[`Understanding the ECMAScript spec`](HTTPS://v8.dev/blog/understanding-ecmascript-part-3).
 
-### [`Automatic Semicolon Insertion`](https://tc39.es/ecma262/#sec-automatic-semicolon-insertion)
+### [`Automatic Semicolon Insertion`](HTTPS://tc39.es/ecma262/#sec-automatic-semicolon-insertion)
 
 This section describes all the rules where we can omit a semicolon while writing
 JavaScript. All the explanation boils down to
@@ -147,7 +147,7 @@ This section on asi is written with a parser in mind, it explicitly states that
 the source text is parsed from left to right, which makes it almost impossible
 to write the parser in any other way. The author of jsparagus made a rant about
 this
-[`here`](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md#automatic-semicolon-insertion-).
+[`here`](HTTPS://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md#automatic-semicolon-insertion-).
 
 > The specification for this feature is both very-high-level and weirdly
 > procedural (“When, as the source text is parsed from left to right, a token is

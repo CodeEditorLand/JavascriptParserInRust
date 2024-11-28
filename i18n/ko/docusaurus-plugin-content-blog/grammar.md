@@ -9,7 +9,7 @@ title: JavaScript 문법
 
 ## LL(1) 문법
 
-[`위키백과`](https://en.wikipedia.org/wiki/LL_grammar)에 따르면,
+[`위키백과`](HTTPS://en.wikipedia.org/wiki/LL_grammar)에 따르면,
 
 > LL grammar은 문맥에 구애받지 않는 문법으로, 입력을 왼쪽에서 오른쪽으로
 > 파싱하는 LL 파서로 파싱할 수 있습니다.
@@ -28,9 +28,9 @@ LL Grammars이 학계에서 특히 관심을 끄는 이유는 우리는 게으�
 마찬가지입니다.
 
 :::info Mozilla는 수년
-전[`jsparagus`](https://github.com/mozilla-spidermonkey/jsparagus) 프로젝트를
+전[`jsparagus`](HTTPS://github.com/mozilla-spidermonkey/jsparagus) 프로젝트를
 시작했습니다. 그들은 과거 2년간 그다지 업데이트가 없었고,
-[`js-quirks.md`](https://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md)가
+[`js-quirks.md`](HTTPS://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md)가
 마지막 강한 메세지를 남깁니다.
 
 > 오늘 뭘 배웠지?
@@ -110,7 +110,7 @@ ECMAScript 클래스는 엄격모드 이후에 만들어 졌기에 클래스 내
 범위가 없습니다, 클래스를 파싱하기 위해서는 추가로 상태를 갖을 필요가 있습니다.
 
 ```rust reference
-https://github.com/swc-project/swc/blob/f9c4eff94a133fa497778328fa0734aa22d5697c/crates/swc_ecma_parser/src/parser/class_and_fn.rs#L85
+HTTPS://github.com/swc-project/swc/blob/f9c4eff94a133fa497778328fa0734aa22d5697c/crates/swc_ecma_parser/src/parser/class_and_fn.rs#L85
 ```
 
 ---
@@ -134,7 +134,7 @@ It is a Syntax Error if the source text matched by this production is strict mod
 그러나 directives가 섞이면 이는 불가능하다:
 
 ```javascript reference
-https://github.com/tc39/test262/blob/747bed2e8aaafe8fdf2c65e8a10dd7ae64f66c47/test/language/literals/string/legacy-octal-escape-sequence-prologue-strict.js#L16-L19
+HTTPS://github.com/tc39/test262/blob/747bed2e8aaafe8fdf2c65e8a10dd7ae64f66c47/test/language/literals/string/legacy-octal-escape-sequence-prologue-strict.js#L16-L19
 ```
 
 `use strict` 는 에스케이프된 오래된 8진수 뒤에 선언되어 있지만, 구문 에러를 던질
@@ -175,7 +175,7 @@ It is a Syntax Error if FunctionBodyContainsUseStrict of FunctionBody is true an
 function with non-simple parameter list"라 의문의 메세지를 던집니다.
 
 상세한 설명은 ESLint의 저자의
-[`글`](https://humanwhocodes.com/blog/2016/10/the-ecmascript-2016-change-you-probably-dont-know/)에
+[`글`](HTTPS://humanwhocodes.com/blog/2016/10/the-ecmascript-2016-change-you-probably-dont-know/)에
 게시되어 있습니다.
 
 :::info
@@ -202,7 +202,7 @@ function foo(a, b) {
 
 하지만... 누가 런타임에 의미를 가질 수 있다 생각할까요?
 
-[`이 estree issue`](https://github.com/estree/estree/issues/194)에 따르면 다음과
+[`이 estree issue`](HTTPS://github.com/estree/estree/issues/194)에 따르면 다음과
 같은 내용이 있습니다.
 
 ```javascript
@@ -320,7 +320,7 @@ Annex B.3.2 에
 전체에 할애되어 있습니다. 요약하면
 
 ```javascript reference
-https://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/scope.js#L30-L35
+HTTPS://github.com/acornjs/acorn/blob/11735729c4ebe590e406f952059813f250a4cbd1/acorn/src/scope.js#L30-L35
 ```
 
 함수 선언 안에 있는 경우 `FunctionDeclaration`의 이름은 `var` 선언과 동일하게
@@ -356,7 +356,7 @@ function foo() {
 예를 들어 Rome에서는 구문 분석 중에 컨텍스트를 유지하는 것이 가장 좋습니다:
 
 ```rust reference
-https://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/state.rs#L404-L425
+HTTPS://github.com/rome/tools/blob/5a059c0413baf1d54436ac0c149a829f0dfd1f4d/crates/rome_js_parser/src/state.rs#L404-L425
 ```
 
 그리고 문법에 따라 이러한 플래그를 적절히 전환하고 확인합니다.
@@ -597,7 +597,7 @@ RegularExpressionLiteral ::
 
 ## Cover Grammar
 
-이 주제에 대한 [`V8의 글`](https://v8.dev/blog/understanding-ecmascript-part-4)을
+이 주제에 대한 [`V8의 글`](HTTPS://v8.dev/blog/understanding-ecmascript-part-4)을
 먼저 읽어보세요.
 
 요약하자면, 사양에는 다음 세 가지 커버 문법이 명시되어 있습니다:
@@ -641,12 +641,12 @@ let bar = (a, b, c) => {}; // ArrowExpression
 파서 내에서 스코프 트리를 작성하는 경우 주의해야 합니다, 즉, 파싱 중에 화살표
 표현식에 대한 스코프를 생성합니다, 시퀀스 표현식에 대해서는 생성하지 않습니다,
 이 작업을 수행하는 방법이 명확하지 않습니다.
-[`esbuild`](https://github.com/evanw/esbuild)는 임시 스코프를 먼저 생성하여 이
+[`esbuild`](HTTPS://github.com/evanw/esbuild)는 임시 스코프를 먼저 생성하여 이
 문제를 해결했습니다, 임시 스코프를 생성한 다음 `ArrowExpression`이 아닌 경우
 삭제하는 방식으로 이 문제를 해결했습니다.
 
 이는
-[`아키텍처 문서`](https://github.com/evanw/esbuild/blob/master/docs/architecture.md#symbols-and-scopes)에
+[`아키텍처 문서`](HTTPS://github.com/evanw/esbuild/blob/master/docs/architecture.md#symbols-and-scopes)에
 명시되어 있습니다:
 
 > 파서가 범위를 밀고 선언을 구문 분석하는 도중에 선언이 선언이 아니라는 것을

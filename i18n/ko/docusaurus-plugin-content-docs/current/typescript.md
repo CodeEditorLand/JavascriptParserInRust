@@ -5,7 +5,7 @@ title: TypeScript
 
 자바스크립트 대신 타입스크립트 파싱에 도전하고 싶은가요?
 나쁜 소식은 사양이 없다는 것,
-좋은 소식은 타입스크립트 파서가 [`단일 파일`](https://github.com/microsoft/TypeScript/blob/main/src/compiler/parser.ts)이라는 것입니다 🙃.
+좋은 소식은 타입스크립트 파서가 [`단일 파일`](HTTPS://github.com/microsoft/TypeScript/blob/main/src/compiler/parser.ts)이라는 것입니다 🙃.
 
 ## JSX vs TSX
 
