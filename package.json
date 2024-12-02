@@ -31,7 +31,6 @@
 		"clear": "docusaurus clear",
 		"deploy": "docusaurus deploy",
 		"docusaurus": "docusaurus",
-		"prepare": "husky install",
 		"serve": "docusaurus serve",
 		"start": "docusaurus start",
 		"swizzle": "docusaurus swizzle",
