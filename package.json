@@ -27,14 +27,14 @@
 		]
 	},
 	"dependencies": {
-		"@docusaurus/core": "3.6.3",
-		"@docusaurus/preset-classic": "3.6.3",
+		"@docusaurus/core": "3.7.0",
+		"@docusaurus/preset-classic": "3.7.0",
 		"@vegaprotocol/docusaurus-theme-github-codeblock": "0.1.8"
 	},
 	"devDependencies": {
-		"@docusaurus/module-type-aliases": "3.6.3",
-		"@docusaurus/tsconfig": "3.6.3",
-		"@docusaurus/types": "3.6.3",
-		"lint-staged": "15.2.10"
+		"@docusaurus/module-type-aliases": "3.7.0",
+		"@docusaurus/tsconfig": "3.7.0",
+		"@docusaurus/types": "3.7.0",
+		"lint-staged": "15.3.0"
 	}
 }
